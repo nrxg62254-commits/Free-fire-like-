@@ -1,0 +1,6 @@
+services:
+    - type: worker
+    name: zeeryx-autolike
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python b.py
