@@ -1,0 +1,1722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOP 10 STUDY CENTRE Pro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --bg2: #0f0f1a;
+  --bg3: #13131f;
+  --glass: rgba(255,255,255,0.05);
+  --glass2: rgba(255,255,255,0.08);
+  --border: rgba(255,255,255,0.1);
+  --accent: #00f5ff;
+  --accent2: #7c3aed;
+  --accent3: #f59e0b;
+  --green: #10b981;
+  --red: #ef4444;
+  --text: #e2e8f0;
+  --text2: #94a3b8;
+  --text3: #64748b;
+  --glow: 0 0 20px rgba(0,245,255,0.3);
+  --glow2: 0 0 20px rgba(124,58,237,0.3);
+  --radius: 16px;
+  --shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Exo 2',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 20% 20%,rgba(124,58,237,0.08) 0%,transparent 50%),radial-gradient(ellipse at 80% 80%,rgba(0,245,255,0.06) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.screen{display:none;min-height:100vh;position:relative;z-index:1;}
+.screen.active{display:flex;flex-direction:column;}
+
+/* HEADER */
+.header{padding:16px 20px;display:flex;align-items:center;justify-content:space-between;background:rgba(10,10,15,0.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;}
+.logo{font-family:'Orbitron',monospace;font-size:18px;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:2px;}
+.header-btns{display:flex;gap:8px;align-items:center;}
+.icon-btn{background:var(--glass);border:1px solid var(--border);border-radius:10px;width:38px;height:38px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:var(--text);transition:all 0.3s;padding:0;}
+.icon-btn:hover{background:var(--glass2);border-color:var(--accent);transform:scale(1.05);}
+.lang-toggle{font-size:12px;font-weight:700;font-family:'Orbitron',monospace;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+
+/* SCROLLABLE CONTENT */
+.scroll-area{flex:1;overflow-y:auto;padding:20px;}
+.scroll-area::-webkit-scrollbar{width:4px;}
+.scroll-area::-webkit-scrollbar-track{background:transparent;}
+.scroll-area::-webkit-scrollbar-thumb{background:var(--accent2);border-radius:2px;}
+
+/* GLASS CARDS */
+.card{background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;transition:all 0.3s;}
+.card:hover{border-color:rgba(0,245,255,0.2);transform:translateY(-2px);}
+.card-glow{box-shadow:var(--glow);}
+
+/* HOME SCREEN */
+.hero-section{text-align:center;padding:24px 0 16px;}
+.hero-title{font-family:'Orbitron',monospace;font-size:clamp(24px,6vw,36px);font-weight:900;background:linear-gradient(135deg,#fff,var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.2;margin-bottom:8px;}
+.hero-sub{color:var(--text2);font-size:14px;font-weight:300;}
+.streak-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,rgba(245,158,11,0.2),rgba(245,158,11,0.1));border:1px solid rgba(245,158,11,0.3);border-radius:20px;padding:6px 14px;font-size:12px;color:var(--accent3);font-weight:600;margin-top:12px;}
+
+.section-title{font-family:'Orbitron',monospace;font-size:11px;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.section-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--accent),transparent);}
+
+.categories-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:16px;}
+.cat-card{background:var(--glass);border:1px solid var(--border);border-radius:14px;padding:16px;cursor:pointer;transition:all 0.3s;text-align:center;position:relative;overflow:hidden;}
+.cat-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--cat-color,rgba(0,245,255,0.1)),transparent);opacity:0;transition:opacity 0.3s;}
+.cat-card:hover::before,.cat-card:active::before{opacity:1;}
+.cat-card:hover{border-color:var(--cat-color,var(--accent));transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.3);}
+.cat-icon{font-size:28px;margin-bottom:8px;display:block;}
+.cat-name{font-family:'Orbitron',monospace;font-size:10px;font-weight:700;letter-spacing:1px;color:var(--text);text-transform:uppercase;}
+.cat-count{font-size:11px;color:var(--text3);margin-top:4px;}
+.cat-badge{position:absolute;top:8px;right:8px;background:var(--accent2);color:#fff;font-size:9px;padding:2px 6px;border-radius:6px;font-weight:700;}
+
+.quick-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
+.quick-btn{background:var(--glass);border:1px solid var(--border);border-radius:12px;padding:14px 8px;text-align:center;cursor:pointer;transition:all 0.3s;}
+.quick-btn:hover{border-color:var(--accent2);background:var(--glass2);}
+.quick-btn-icon{font-size:20px;display:block;margin-bottom:4px;}
+.quick-btn-label{font-size:10px;color:var(--text2);font-weight:600;letter-spacing:0.5px;}
+
+/* STATS BAR */
+.stats-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
+.stat-item{background:var(--glass);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center;}
+.stat-num{font-family:'Orbitron',monospace;font-size:18px;font-weight:700;color:var(--accent);}
+.stat-label{font-size:10px;color:var(--text3);margin-top:2px;}
+
+/* LEADERBOARD */
+.lb-item{display:flex;align-items:center;gap:12px;padding:12px;background:var(--glass);border:1px solid var(--border);border-radius:12px;margin-bottom:8px;}
+.lb-rank{font-family:'Orbitron',monospace;font-size:14px;font-weight:900;min-width:28px;text-align:center;}
+.lb-rank.gold{color:#ffd700;}
+.lb-rank.silver{color:#c0c0c0;}
+.lb-rank.bronze{color:#cd7f32;}
+.lb-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.lb-info{flex:1;}
+.lb-name{font-weight:600;font-size:14px;}
+.lb-score{font-size:12px;color:var(--text2);}
+.lb-pts{font-family:'Orbitron',monospace;font-size:14px;color:var(--accent3);font-weight:700;}
+
+/* ANNOUNCEMENT BANNER */
+.announcement{background:linear-gradient(135deg,rgba(124,58,237,0.2),rgba(0,245,255,0.1));border:1px solid rgba(0,245,255,0.2);border-radius:12px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text);}
+.ann-icon{font-size:18px;flex-shrink:0;}
+
+/* DIFFICULTY SCREEN */
+.diff-cards{display:grid;gap:12px;}
+.diff-card{background:var(--glass);border:2px solid var(--border);border-radius:var(--radius);padding:20px;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;gap:16px;}
+.diff-card:hover{transform:translateX(6px);}
+.diff-icon{font-size:32px;min-width:48px;text-align:center;}
+.diff-info{}
+.diff-name{font-family:'Orbitron',monospace;font-size:14px;font-weight:700;margin-bottom:4px;}
+.diff-desc{font-size:12px;color:var(--text2);}
+.diff-card.easy{border-color:rgba(16,185,129,0.3);}
+.diff-card.easy:hover{border-color:var(--green);box-shadow:0 0 20px rgba(16,185,129,0.2);}
+.diff-card.medium{border-color:rgba(245,158,11,0.3);}
+.diff-card.medium:hover{border-color:var(--accent3);box-shadow:0 0 20px rgba(245,158,11,0.2);}
+.diff-card.hard{border-color:rgba(239,68,68,0.3);}
+.diff-card.hard:hover{border-color:var(--red);box-shadow:0 0 20px rgba(239,68,68,0.2);}
+.diff-card.hardcore{border-color:rgba(124,58,237,0.5);background:linear-gradient(135deg,rgba(124,58,237,0.1),var(--glass));}
+.diff-card.hardcore:hover{border-color:var(--accent2);box-shadow:0 0 20px rgba(124,58,237,0.3);}
+
+/* QUIZ SCREEN */
+.quiz-header{padding:16px 20px;background:rgba(10,10,15,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.quiz-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.q-counter{font-family:'Orbitron',monospace;font-size:12px;color:var(--text2);}
+.timer-wrap{display:flex;align-items:center;gap:8px;}
+.timer-icon{font-size:16px;}
+.timer-num{font-family:'Orbitron',monospace;font-size:18px;font-weight:700;}
+.timer-num.warning{color:var(--accent3);animation:pulse 0.5s infinite;}
+.timer-num.danger{color:var(--red);animation:pulse 0.3s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.5;}}
+.score-display{font-family:'Orbitron',monospace;font-size:12px;color:var(--accent);}
+.progress-bar{height:4px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width 0.5s ease;border-radius:2px;}
+
+.quiz-content{padding:20px;flex:1;}
+.question-card{background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:20px;padding:24px;margin-bottom:20px;position:relative;overflow:hidden;}
+.question-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2),transparent);}
+.q-category{font-size:10px;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:10px;font-weight:700;}
+.q-text{font-size:17px;font-weight:600;line-height:1.6;color:var(--text);}
+.q-image{width:100%;max-height:200px;object-fit:cover;border-radius:12px;margin:12px 0;}
+
+.options-list{display:grid;gap:10px;}
+.option-btn{background:var(--glass);border:1.5px solid var(--border);border-radius:14px;padding:14px 18px;text-align:left;cursor:pointer;transition:all 0.25s;font-size:15px;color:var(--text);display:flex;align-items:center;gap:12px;font-family:'Exo 2',sans-serif;position:relative;overflow:hidden;}
+.option-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,245,255,0.05),transparent);opacity:0;transition:opacity 0.3s;}
+.option-btn:hover:not(:disabled)::before{opacity:1;}
+.option-btn:hover:not(:disabled){border-color:rgba(0,245,255,0.4);transform:translateX(4px);}
+.option-letter{width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;font-family:'Orbitron',monospace;flex-shrink:0;}
+.option-btn.correct{border-color:var(--green)!important;background:rgba(16,185,129,0.15)!important;animation:correct-flash 0.5s ease;}
+.option-btn.wrong{border-color:var(--red)!important;background:rgba(239,68,68,0.15)!important;animation:wrong-shake 0.4s ease;}
+@keyframes correct-flash{0%,100%{transform:scale(1);}50%{transform:scale(1.02);}}
+@keyframes wrong-shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-8px);}75%{transform:translateX(8px);}}
+.option-btn:disabled{cursor:default;}
+
+.ai-explanation{background:linear-gradient(135deg,rgba(124,58,237,0.15),rgba(0,245,255,0.05));border:1px solid rgba(124,58,237,0.3);border-radius:14px;padding:16px;margin-top:16px;font-size:14px;line-height:1.6;color:var(--text2);display:none;}
+.ai-explanation.visible{display:block;animation:fadeIn 0.5s ease;}
+.ai-label{font-size:10px;letter-spacing:2px;color:var(--accent2);text-transform:uppercase;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* RESULT SCREEN */
+.result-hero{text-align:center;padding:32px 20px 20px;}
+.result-score-ring{width:150px;height:150px;border-radius:50%;background:conic-gradient(var(--accent) var(--pct,0%),rgba(255,255,255,0.05) 0%);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;position:relative;box-shadow:0 0 40px rgba(0,245,255,0.2);}
+.result-score-ring::before{content:'';position:absolute;inset:10px;border-radius:50%;background:var(--bg);}
+.result-score-inner{position:relative;z-index:1;text-align:center;}
+.result-pct{font-family:'Orbitron',monospace;font-size:28px;font-weight:900;color:var(--accent);}
+.result-label{font-size:11px;color:var(--text2);}
+.result-title{font-family:'Orbitron',monospace;font-size:20px;font-weight:700;margin-bottom:8px;}
+.result-sub{color:var(--text2);font-size:14px;}
+.result-stars{font-size:28px;margin:12px 0;}
+.result-stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 20px 20px;}
+.result-stat{background:var(--glass);border:1px solid var(--border);border-radius:14px;padding:16px;text-align:center;}
+.result-stat-val{font-family:'Orbitron',monospace;font-size:22px;font-weight:700;color:var(--accent);}
+.result-stat-label{font-size:11px;color:var(--text2);margin-top:4px;}
+.result-actions{padding:0 20px 30px;display:grid;gap:10px;}
+
+/* BUTTONS */
+.btn{padding:14px 24px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.3s;border:none;font-family:'Exo 2',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 4px 20px rgba(0,245,255,0.2);}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,245,255,0.3);}
+.btn-secondary{background:var(--glass);border:1px solid var(--border);color:var(--text);}
+.btn-secondary:hover{border-color:var(--accent);background:var(--glass2);}
+.btn-danger{background:linear-gradient(135deg,var(--red),#b91c1c);color:#fff;}
+.btn-success{background:linear-gradient(135deg,var(--green),#059669);color:#fff;}
+.btn-small{padding:8px 16px;font-size:13px;width:auto;}
+
+/* ADMIN PANEL */
+.admin-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:1000;display:none;align-items:flex-end;}
+.admin-overlay.active{display:flex;}
+.admin-panel{background:var(--bg2);border:1px solid var(--border);border-radius:24px 24px 0 0;width:100%;max-height:90vh;overflow-y:auto;padding:20px;}
+.admin-panel::-webkit-scrollbar{width:4px;}
+.admin-panel::-webkit-scrollbar-thumb{background:var(--accent2);}
+.admin-drag{width:40px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 20px;}
+.admin-title{font-family:'Orbitron',monospace;font-size:16px;font-weight:700;color:var(--accent);margin-bottom:4px;}
+.admin-sub{font-size:12px;color:var(--text3);margin-bottom:20px;}
+
+.admin-tabs{display:flex;gap:8px;margin-bottom:20px;overflow-x:auto;padding-bottom:4px;}
+.admin-tab{padding:8px 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;background:var(--glass);border:1px solid var(--border);color:var(--text2);transition:all 0.3s;}
+.admin-tab.active{background:var(--accent2);border-color:var(--accent2);color:#fff;}
+
+.admin-section{display:none;}
+.admin-section.active{display:block;}
+
+.form-group{margin-bottom:14px;}
+.form-label{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px;display:block;letter-spacing:0.5px;}
+.form-input{width:100%;background:var(--glass);border:1px solid var(--border);border-radius:10px;padding:11px 14px;color:var(--text);font-size:14px;font-family:'Exo 2',sans-serif;outline:none;transition:border-color 0.3s;}
+.form-input:focus{border-color:var(--accent);}
+.form-select{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:11px 14px;color:var(--text);font-size:14px;font-family:'Exo 2',sans-serif;outline:none;cursor:pointer;}
+textarea.form-input{min-height:80px;resize:vertical;}
+
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px;background:var(--glass);border:1px solid var(--border);border-radius:12px;margin-bottom:10px;}
+.toggle-info{flex:1;}
+.toggle-name{font-size:14px;font-weight:600;}
+.toggle-desc{font-size:11px;color:var(--text3);margin-top:2px;}
+.toggle-switch{position:relative;width:46px;height:24px;flex-shrink:0;}
+.toggle-switch input{opacity:0;width:0;height:0;}
+.toggle-slider{position:absolute;cursor:pointer;inset:0;background:rgba(255,255,255,0.1);border-radius:24px;transition:0.3s;}
+.toggle-slider:before{content:'';position:absolute;height:18px;width:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:0.3s;}
+input:checked+.toggle-slider{background:linear-gradient(135deg,var(--accent),var(--accent2));}
+input:checked+.toggle-slider:before{transform:translateX(22px);}
+
+.q-list{display:grid;gap:8px;margin-top:12px;}
+.q-item{background:var(--glass);border:1px solid var(--border);border-radius:12px;padding:12px;display:flex;align-items:flex-start;gap:10px;}
+.q-item-text{flex:1;font-size:13px;line-height:1.4;}
+.q-item-meta{font-size:11px;color:var(--text3);margin-top:4px;display:flex;gap:8px;}
+.q-item-actions{display:flex;gap:6px;}
+.q-action-btn{background:var(--glass);border:1px solid var(--border);border-radius:8px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;transition:all 0.2s;}
+.q-action-btn:hover{background:var(--glass2);}
+.q-action-btn.del:hover{border-color:var(--red);}
+.q-action-btn.edit:hover{border-color:var(--accent);}
+
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+.stat-card{background:var(--glass);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;}
+.stat-big{font-family:'Orbitron',monospace;font-size:24px;font-weight:700;color:var(--accent);}
+.stat-sm{font-size:11px;color:var(--text3);margin-top:4px;}
+
+/* CONFETTI */
+.confetti-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;}
+
+/* PASSWORD MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.active{display:flex;}
+.modal-box{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:28px;width:100%;max-width:340px;}
+.modal-title{font-family:'Orbitron',monospace;font-size:16px;font-weight:700;margin-bottom:6px;color:var(--accent);}
+.modal-sub{font-size:13px;color:var(--text2);margin-bottom:20px;}
+.modal-lock-icon{font-size:48px;text-align:center;margin-bottom:16px;}
+
+/* NAME ENTRY */
+.name-entry{padding:20px;}
+.name-entry-title{font-family:'Orbitron',monospace;font-size:16px;margin-bottom:6px;color:var(--accent);}
+.name-entry-sub{font-size:13px;color:var(--text2);margin-bottom:20px;}
+
+/* TOAST */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:12px 20px;font-size:14px;font-weight:600;z-index:9998;transition:transform 0.3s;white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+.toast.success{border-color:var(--green);color:var(--green);}
+.toast.error{border-color:var(--red);color:var(--red);}
+.toast.info{border-color:var(--accent);color:var(--accent);}
+
+/* AD CONTAINER */
+.ad-container{width:100%;overflow:hidden;text-align:center;padding:8px 0;min-height:50px;position:relative;}
+.ad-placeholder{background:var(--glass);border:1px dashed var(--border);border-radius:10px;padding:12px;font-size:11px;color:var(--text3);text-align:center;}
+
+/* PREMIUM BADGE */
+.premium-banner{background:linear-gradient(135deg,rgba(124,58,237,0.3),rgba(0,245,255,0.1));border:1px solid rgba(0,245,255,0.3);border-radius:14px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+.premium-icon{font-size:24px;}
+.premium-text{flex:1;}
+.premium-title{font-family:'Orbitron',monospace;font-size:12px;font-weight:700;color:var(--accent);}
+.premium-sub{font-size:11px;color:var(--text2);margin-top:2px;}
+.premium-unlock-btn{background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff;border:none;padding:8px 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;}
+
+/* DAILY CHALLENGE */
+.daily-card{background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(124,58,237,0.1));border:1px solid rgba(245,158,11,0.3);border-radius:16px;padding:18px;margin-bottom:16px;cursor:pointer;transition:all 0.3s;}
+.daily-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(245,158,11,0.15);}
+.daily-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.daily-flame{font-size:24px;}
+.daily-title{font-family:'Orbitron',monospace;font-size:13px;font-weight:700;color:var(--accent3);}
+.daily-sub{font-size:11px;color:var(--text2);}
+.daily-meta{display:flex;gap:10px;}
+.daily-chip{background:rgba(245,158,11,0.2);border:1px solid rgba(245,158,11,0.3);border-radius:6px;padding:4px 10px;font-size:11px;color:var(--accent3);font-weight:600;}
+
+/* QUIZ IMAGE */
+.img-question{width:100%;border-radius:12px;margin:12px 0;max-height:180px;object-fit:cover;border:1px solid var(--border);}
+
+/* LOADING SPINNER */
+.spinner{width:20px;height:20px;border:2px solid rgba(255,255,255,0.2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* COLOR THEMES */
+body.theme-purple{--accent:#c084fc;--accent2:#7c3aed;}
+body.theme-green{--accent:#34d399;--accent2:#059669;}
+body.theme-orange{--accent:#fb923c;--accent2:#ea580c;}
+body.theme-pink{--accent:#f472b6;--accent2:#db2777;}
+
+/* BACK BTN */
+.back-btn{display:flex;align-items:center;gap:6px;color:var(--text2);font-size:14px;cursor:pointer;padding:4px 0;font-weight:600;background:none;border:none;}
+.back-btn:hover{color:var(--accent);}
+
+/* NO QUESTIONS */
+.empty-state{text-align:center;padding:40px 20px;color:var(--text3);}
+.empty-icon{font-size:48px;margin-bottom:12px;}
+.empty-text{font-size:15px;font-weight:600;margin-bottom:6px;color:var(--text2);}
+.empty-sub{font-size:13px;}
+
+/* RESPONSIVE */
+@media(min-width:480px){
+  .categories-grid{grid-template-columns:repeat(3,1fr);}
+  .quick-actions{grid-template-columns:repeat(4,1fr);}
+}
+@media(min-width:768px){
+  .scroll-area{max-width:600px;margin:0 auto;}
+  .quiz-content{max-width:600px;margin:0 auto;}
+  .result-hero{max-width:600px;margin:0 auto;}
+  .result-stats-grid{max-width:600px;margin:0 auto;}
+  .result-actions{max-width:600px;margin:0 auto;}
+}
+</style>
+</head>
+<body>
+<canvas class="confetti-canvas" id="confettiCanvas"></canvas>
+<div class="toast" id="toast"></div>
+
+<!-- PASSWORD MODAL -->
+<div class="modal-overlay" id="pwModal">
+  <div class="modal-box">
+    <div class="modal-lock-icon">🔐</div>
+    <div class="modal-title" id="pwModalTitle">Admin Access</div>
+    <div class="modal-sub" id="pwModalSub">Enter admin password to continue</div>
+    <div class="form-group">
+      <input type="password" class="form-input" id="pwInput" placeholder="Password">
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="checkPassword()">Enter</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL OVERLAY -->
+<div class="admin-overlay" id="adminOverlay">
+  <div class="admin-panel" id="adminPanel">
+    <div class="admin-drag"></div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;">
+      <div>
+        <div class="admin-title">⚙️ Admin Panel</div>
+        <div class="admin-sub">TOP 10 STUDY CENTRE Pro Management</div>
+      </div>
+      <button class="icon-btn" onclick="closeAdmin()" style="font-size:18px;">✕</button>
+    </div>
+    <div class="admin-tabs">
+      <div class="admin-tab active" onclick="switchAdminTab('questions')">📝 Questions</div>
+      <div class="admin-tab" onclick="switchAdminTab('settings')">⚙️ Settings</div>
+      <div class="admin-tab" onclick="switchAdminTab('premium')">👑 Premium</div>
+      <div class="admin-tab" onclick="switchAdminTab('stats')">📊 Stats</div>
+      <div class="admin-tab" onclick="switchAdminTab('theme')">🎨 Theme</div>
+      <div class="admin-tab" onclick="switchAdminTab('daily')">🔥 Daily</div>
+    </div>
+
+    <!-- QUESTIONS TAB -->
+    <div class="admin-section active" id="tab-questions">
+      <div class="section-title" style="-webkit-text-fill-color:var(--accent)">Add Question</div>
+      <div class="form-group">
+        <label class="form-label">Question Text (EN)</label>
+        <textarea class="form-input" id="aq-text" placeholder="Enter question in English..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Question Text (HI)</label>
+        <textarea class="form-input" id="aq-text-hi" placeholder="प्रश्न हिंदी में लिखें..."></textarea>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select class="form-select" id="aq-cat">
+            <option value="gk">GK</option>
+            <option value="science">Science</option>
+            <option value="math">Math</option>
+            <option value="english">English</option>
+            <option value="hindi">Hindi</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Difficulty</label>
+          <select class="form-select" id="aq-diff">
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Option A</label>
+        <input class="form-input" id="aq-a" placeholder="Option A">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Option B</label>
+        <input class="form-input" id="aq-b" placeholder="Option B">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Option C</label>
+        <input class="form-input" id="aq-c" placeholder="Option C">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Option D</label>
+        <input class="form-input" id="aq-d" placeholder="Option D">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Correct Answer</label>
+        <select class="form-select" id="aq-ans">
+          <option value="0">A</option>
+          <option value="1">B</option>
+          <option value="2">C</option>
+          <option value="3">D</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Image URL (optional)</label>
+        <input class="form-input" id="aq-img" placeholder="https://...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Explanation (optional)</label>
+        <textarea class="form-input" id="aq-explain" placeholder="Why is this the correct answer?"></textarea>
+      </div>
+      <button class="btn btn-primary" onclick="addQuestion()" style="margin-bottom:16px;">➕ Add Question</button>
+      <button class="btn btn-secondary btn-small" onclick="exportQuestions()" style="width:auto;display:inline-flex;margin-bottom:8px;">📤 Export JSON</button>
+      <button class="btn btn-secondary btn-small" onclick="document.getElementById('importFile').click()" style="width:auto;display:inline-flex;margin-left:8px;margin-bottom:8px;">📥 Import JSON</button>
+      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importQuestions(event)">
+      <div class="section-title" style="-webkit-text-fill-color:var(--accent);margin-top:16px;">Question Bank</div>
+      <div id="questionList"></div>
+    </div>
+
+    <!-- SETTINGS TAB -->
+    <div class="admin-section" id="tab-settings">
+      <div class="toggle-row">
+        <div class="toggle-info"><div class="toggle-name">🔊 Sound Effects</div><div class="toggle-desc">Enable quiz sounds</div></div>
+        <label class="toggle-switch"><input type="checkbox" id="t-sound" checked onchange="saveSetting('sound',this.checked)"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info"><div class="toggle-name">📢 Show Ads</div><div class="toggle-desc">Adsterra advertisement</div></div>
+        <label class="toggle-switch"><input type="checkbox" id="t-ads" checked onchange="saveSetting('ads',this.checked)"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info"><div class="toggle-name">🤖 AI Explanations</div><div class="toggle-desc">Gemini API explanations</div></div>
+        <label class="toggle-switch"><input type="checkbox" id="t-ai" checked onchange="saveSetting('ai',this.checked)"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info"><div class="toggle-name">🎉 Confetti</div><div class="toggle-desc">Celebrate high scores</div></div>
+        <label class="toggle-switch"><input type="checkbox" id="t-confetti" checked onchange="saveSetting('confetti',this.checked)"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="form-group" style="margin-top:16px;">
+        <label class="form-label">Timer (seconds per question)</label>
+        <input type="number" class="form-input" id="timerSetting" value="30" min="5" max="120" onchange="saveSetting('timerSecs',this.value)">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Questions per Quiz</label>
+        <input type="number" class="form-input" id="qPerQuiz" value="10" min="3" max="50" onchange="saveSetting('qPerQuiz',this.value)">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Gemini API Key</label>
+        <input type="text" class="form-input" id="geminiKey" placeholder="YOUR_API_KEY_HERE" onchange="saveSetting('geminiKey',this.value)">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Announcement Banner</label>
+        <input class="form-input" id="announcementText" placeholder="Enter announcement text..." onchange="saveSetting('announcement',this.value)">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Admin Password</label>
+        <input type="password" class="form-input" id="newAdminPw" placeholder="Change password...">
+        <button class="btn btn-secondary btn-small" style="margin-top:8px;width:auto;" onclick="changeAdminPassword()">Change Password</button>
+      </div>
+      <button class="btn btn-danger" style="margin-top:8px;" onclick="resetLeaderboard()">🗑️ Reset Leaderboard</button>
+    </div>
+
+    <!-- PREMIUM TAB -->
+    <div class="admin-section" id="tab-premium">
+      <div class="premium-banner" style="margin-bottom:20px;">
+        <div class="premium-icon">👑</div>
+        <div class="premium-text">
+          <div class="premium-title">PREMIUM MODE</div>
+          <div class="premium-sub">Toggle premium features for all users</div>
+        </div>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info"><div class="toggle-name">👑 Premium Mode</div><div class="toggle-desc">Enable all premium features</div></div>
+        <label class="toggle-switch"><input type="checkbox" id="t-premium" onchange="saveSetting('premium',this.checked)"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info"><div class="toggle-name">🚫 No Ads Mode</div><div class="toggle-desc">Remove all advertisements</div></div>
+        <label class="toggle-switch"><input type="checkbox" id="t-noads" onchange="saveSetting('noads',this.checked)"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info"><div class="toggle-name">📝 Exam Mode</div><div class="toggle-desc">No hints, strict mode</div></div>
+        <label class="toggle-switch"><input type="checkbox" id="t-exam" onchange="saveSetting('examMode',this.checked)"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info"><div class="toggle-name">⚡ Hardcore Timer</div><div class="toggle-desc">5 seconds per question</div></div>
+        <label class="toggle-switch"><input type="checkbox" id="t-hardcore" onchange="saveSetting('hardcoreTimer',this.checked)"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info"><div class="toggle-name">🤖 AI Quiz Maker</div><div class="toggle-desc">Generate quizzes with AI</div></div>
+        <label class="toggle-switch"><input type="checkbox" id="t-aiqmaker" onchange="saveSetting('aiQuizMaker',this.checked)"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info"><div class="toggle-name">📄 PDF Export</div><div class="toggle-desc">Export results as PDF</div></div>
+        <label class="toggle-switch"><input type="checkbox" id="t-pdf" onchange="saveSetting('pdfExport',this.checked)"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info"><div class="toggle-name">🏆 Advanced Leaderboard</div><div class="toggle-desc">Global rankings</div></div>
+        <label class="toggle-switch"><input type="checkbox" id="t-advlb" onchange="saveSetting('advLeaderboard',this.checked)"><span class="toggle-slider"></span></label>
+      </div>
+    </div>
+
+    <!-- STATS TAB -->
+    <div class="admin-section" id="tab-stats">
+      <div class="section-title" style="-webkit-text-fill-color:var(--accent)">Overview</div>
+      <div class="stats-grid" id="adminStatsGrid"></div>
+      <div class="section-title" style="-webkit-text-fill-color:var(--accent);margin-top:16px;">Leaderboard</div>
+      <div id="adminLeaderboard"></div>
+    </div>
+
+    <!-- THEME TAB -->
+    <div class="admin-section" id="tab-theme">
+      <div class="section-title" style="-webkit-text-fill-color:var(--accent)">Color Theme</div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px;">
+        <div onclick="setTheme('')" style="padding:14px;background:linear-gradient(135deg,#00f5ff,#7c3aed);border-radius:12px;text-align:center;cursor:pointer;font-size:12px;font-weight:700;color:#fff;">Default Cyan</div>
+        <div onclick="setTheme('theme-purple')" style="padding:14px;background:linear-gradient(135deg,#c084fc,#7c3aed);border-radius:12px;text-align:center;cursor:pointer;font-size:12px;font-weight:700;color:#fff;">Purple Dream</div>
+        <div onclick="setTheme('theme-green')" style="padding:14px;background:linear-gradient(135deg,#34d399,#059669);border-radius:12px;text-align:center;cursor:pointer;font-size:12px;font-weight:700;color:#fff;">Emerald</div>
+        <div onclick="setTheme('theme-orange')" style="padding:14px;background:linear-gradient(135deg,#fb923c,#ea580c);border-radius:12px;text-align:center;cursor:pointer;font-size:12px;font-weight:700;color:#fff;">Sunset</div>
+        <div onclick="setTheme('theme-pink')" style="padding:14px;background:linear-gradient(135deg,#f472b6,#db2777);border-radius:12px;text-align:center;cursor:pointer;font-size:12px;font-weight:700;color:#fff;">Cherry Blossom</div>
+      </div>
+    </div>
+
+    <!-- DAILY CHALLENGE TAB -->
+    <div class="admin-section" id="tab-daily">
+      <div class="section-title" style="-webkit-text-fill-color:var(--accent)">Daily Challenge Config</div>
+      <div class="form-group">
+        <label class="form-label">Daily Category</label>
+        <select class="form-select" id="dailyCat">
+          <option value="random">Random Mix</option>
+          <option value="gk">GK</option>
+          <option value="science">Science</option>
+          <option value="math">Math</option>
+          <option value="english">English</option>
+          <option value="hindi">Hindi</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Questions Count</label>
+        <input type="number" class="form-input" id="dailyCount" value="5" min="3" max="20">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Bonus Points</label>
+        <input type="number" class="form-input" id="dailyBonus" value="50" min="0" max="500">
+      </div>
+      <button class="btn btn-primary" onclick="saveDailyConfig()">💾 Save Daily Config</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SCREEN 1: HOME ===== -->
+<div class="screen active" id="homeScreen">
+  <div class="header">
+    <div class="logo">TOP 10 STUDY CENTRE</div>
+    <div class="header-btns">
+      <button class="icon-btn" onclick="toggleLang()" title="Language"><span class="lang-toggle" id="langToggle">EN</span></button>
+      <button class="icon-btn" onclick="goToLeaderboard()" title="Leaderboard">🏆</button>
+      <button class="icon-btn" id="adminHiddenBtn" onclick="openAdminPanel()" title="Admin" style="font-size:10px;color:var(--text3);">⚙</button>
+    </div>
+  </div>
+  <div class="scroll-area">
+    <div id="adTop" class="ad-container" style="margin-bottom:12px;"></div>
+    <div id="announcementBanner" style="display:none;"></div>
+    <div class="hero-section">
+      <div class="hero-title" id="heroTitle">Quiz<br>Challenge</div>
+      <div class="hero-sub" id="heroSub">Test your knowledge, beat the clock</div>
+      <div class="streak-badge">🔥 <span id="streakCount">0</span> <span id="streakLabel">Day Streak</span></div>
+    </div>
+
+    <div id="dailyChallengeCard"></div>
+
+    <div class="section-title" id="catTitle">Categories</div>
+    <div class="categories-grid" id="categoriesGrid"></div>
+
+    <div class="section-title" id="quickTitle">Quick Play</div>
+    <div class="quick-actions">
+      <div class="quick-btn" onclick="startRandom()"><span class="quick-btn-icon">🎲</span><div class="quick-btn-label" id="ql-random">Random</div></div>
+      <div class="quick-btn" onclick="showLeaderboard()"><span class="quick-btn-icon">🏆</span><div class="quick-btn-label" id="ql-lb">Scores</div></div>
+      <div class="quick-btn" onclick="startAIQuiz()" id="aiQuizBtn"><span class="quick-btn-icon">🤖</span><div class="quick-btn-label" id="ql-ai">AI Quiz</div></div>
+      <div class="quick-btn" onclick="showStats()"><span class="quick-btn-icon">📊</span><div class="quick-btn-label" id="ql-stats">Stats</div></div>
+    </div>
+
+    <div class="stats-bar" id="statsBar"></div>
+
+    <div id="adBottom" class="ad-container" style="margin-top:8px;"></div>
+  </div>
+</div>
+
+<!-- ===== SCREEN 2: NAME ENTRY ===== -->
+<div class="screen" id="nameScreen">
+  <div class="header">
+    <button class="back-btn" onclick="showScreen('homeScreen')">← Back</button>
+  </div>
+  <div class="scroll-area">
+    <div class="name-entry">
+      <div style="font-size:48px;text-align:center;margin-bottom:20px;">👤</div>
+      <div class="name-entry-title" id="ne-title">Your Name</div>
+      <div class="name-entry-sub" id="ne-sub">Enter your name for the leaderboard</div>
+      <div class="form-group">
+        <input class="form-input" id="playerNameInput" placeholder="Enter your name..." style="font-size:16px;padding:16px;">
+      </div>
+      <button class="btn btn-primary" onclick="saveName()">Continue →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SCREEN 3: DIFFICULTY ===== -->
+<div class="screen" id="diffScreen">
+  <div class="header">
+    <button class="back-btn" onclick="showScreen('homeScreen')">← Back</button>
+    <div style="font-family:'Orbitron',monospace;font-size:13px;color:var(--accent)" id="diffCatName"></div>
+  </div>
+  <div class="scroll-area">
+    <div style="margin-bottom:20px;">
+      <div style="font-family:'Orbitron',monospace;font-size:18px;font-weight:700;margin-bottom:6px;" id="diffTitle">Select Difficulty</div>
+      <div style="font-size:13px;color:var(--text2);" id="diffSub">Choose your challenge level</div>
+    </div>
+    <div class="diff-cards">
+      <div class="diff-card easy" onclick="startQuiz('easy')">
+        <div class="diff-icon">🌱</div>
+        <div class="diff-info">
+          <div class="diff-name" style="color:var(--green)">Easy</div>
+          <div class="diff-desc" id="dd-easy">30 seconds • Basic questions</div>
+        </div>
+        <div style="font-family:'Orbitron',monospace;color:var(--green);font-size:12px;">+10 pts</div>
+      </div>
+      <div class="diff-card medium" onclick="startQuiz('medium')">
+        <div class="diff-icon">⚡</div>
+        <div class="diff-info">
+          <div class="diff-name" style="color:var(--accent3)">Medium</div>
+          <div class="diff-desc" id="dd-med">20 seconds • Moderate questions</div>
+        </div>
+        <div style="font-family:'Orbitron',monospace;color:var(--accent3);font-size:12px;">+20 pts</div>
+      </div>
+      <div class="diff-card hard" onclick="startQuiz('hard')">
+        <div class="diff-icon">🔥</div>
+        <div class="diff-info">
+          <div class="diff-name" style="color:var(--red)">Hard</div>
+          <div class="diff-desc" id="dd-hard">15 seconds • Tough questions</div>
+        </div>
+        <div style="font-family:'Orbitron',monospace;color:var(--red);font-size:12px;">+30 pts</div>
+      </div>
+      <div class="diff-card hardcore" id="hardcoreCard" onclick="startQuiz('hardcore')">
+        <div class="diff-icon">💀</div>
+        <div class="diff-info">
+          <div class="diff-name" style="color:var(--accent2)">Hardcore</div>
+          <div class="diff-desc" id="dd-hc">5 seconds • Expert only 👑</div>
+        </div>
+        <div style="font-family:'Orbitron',monospace;color:var(--accent2);font-size:12px;">+50 pts</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SCREEN 4: QUIZ ===== -->
+<div class="screen" id="quizScreen">
+  <div class="quiz-header">
+    <div class="quiz-meta">
+      <div class="q-counter"><span id="qCurrent">1</span> / <span id="qTotal">10</span></div>
+      <div class="timer-wrap">
+        <span class="timer-icon">⏱️</span>
+        <span class="timer-num" id="timerDisplay">30</span>
+      </div>
+      <div class="score-display">⭐ <span id="liveScore">0</span></div>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill" style="width:0%"></div>
+    </div>
+  </div>
+  <div class="quiz-content" id="quizContent"></div>
+</div>
+
+<!-- ===== SCREEN 5: RESULT ===== -->
+<div class="screen" id="resultScreen">
+  <div class="header">
+    <div class="logo">RESULT</div>
+  </div>
+  <div class="scroll-area" style="padding:0;">
+    <div class="result-hero">
+      <div class="result-score-ring" id="resultRing">
+        <div class="result-score-inner">
+          <div class="result-pct" id="resultPct">0%</div>
+          <div class="result-label">Score</div>
+        </div>
+      </div>
+      <div class="result-stars" id="resultStars">⭐⭐⭐</div>
+      <div class="result-title" id="resultTitle">Well Done!</div>
+      <div class="result-sub" id="resultSub">You completed the quiz</div>
+    </div>
+    <div class="result-stats-grid">
+      <div class="result-stat"><div class="result-stat-val" id="rs-correct">0</div><div class="result-stat-label">Correct</div></div>
+      <div class="result-stat"><div class="result-stat-val" id="rs-wrong">0</div><div class="result-stat-label">Wrong</div></div>
+      <div class="result-stat"><div class="result-stat-val" id="rs-score">0</div><div class="result-stat-label">Points</div></div>
+      <div class="result-stat"><div class="result-stat-val" id="rs-time">0s</div><div class="result-stat-label">Avg Time</div></div>
+    </div>
+    <div class="result-actions">
+      <button class="btn btn-primary" onclick="restartQuiz()">🔄 <span id="rb-restart">Play Again</span></button>
+      <button class="btn btn-secondary" onclick="showScreen('homeScreen')">🏠 <span id="rb-home">Home</span></button>
+      <button class="btn btn-secondary" id="pdfExportBtn" onclick="exportPDF()" style="display:none;">📄 Export PDF</button>
+      <div id="adResult" class="ad-container" style="margin-top:8px;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SCREEN 6: LEADERBOARD ===== -->
+<div class="screen" id="lbScreen">
+  <div class="header">
+    <button class="back-btn" onclick="showScreen('homeScreen')">← Back</button>
+    <div class="logo" style="font-size:14px;">LEADERBOARD</div>
+    <div style="width:38px;"></div>
+  </div>
+  <div class="scroll-area">
+    <div style="text-align:center;margin-bottom:20px;">
+      <div style="font-size:40px;margin-bottom:8px;">🏆</div>
+      <div style="font-family:'Orbitron',monospace;font-size:16px;font-weight:700;" id="lb-title">Top Players</div>
+    </div>
+    <div id="lbList"></div>
+  </div>
+</div>
+
+<!-- ===== SCREEN 7: STATS ===== -->
+<div class="screen" id="statsScreen">
+  <div class="header">
+    <button class="back-btn" onclick="showScreen('homeScreen')">← Back</button>
+    <div class="logo" style="font-size:14px;">MY STATS</div>
+    <div style="width:38px;"></div>
+  </div>
+  <div class="scroll-area" id="statsContent"></div>
+</div>
+
+<script>
+// ============================================================
+// STATE & STORAGE
+// ============================================================
+let state = {
+  lang: 'en',
+  currentCategory: null,
+  currentDifficulty: null,
+  questions: [],
+  currentQ: 0,
+  score: 0,
+  correct: 0,
+  wrong: 0,
+  timer: null,
+  timeLeft: 30,
+  totalTime: 0,
+  playerName: '',
+  isDaily: false,
+  pendingName: false
+};
+
+function loadData(k, def) {
+  try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : def; } catch { return def; }
+}
+function saveData(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+
+let settings = loadData('qmp_settings', {
+  sound: true, ads: true, ai: true, confetti: true,
+  timerSecs: 30, qPerQuiz: 10, geminiKey: 'YOUR_API_KEY_HERE',
+  announcement: '', premium: false, noads: false, examMode: false,
+  hardcoreTimer: false, aiQuizMaker: false, pdfExport: false, advLeaderboard: false,
+  adminPassword: 'admin123', theme: ''
+});
+
+let questions = loadData('qmp_questions', getDefaultQuestions());
+let leaderboard = loadData('qmp_leaderboard', []);
+let userStats = loadData('qmp_stats', { totalQuizzes: 0, totalCorrect: 0, totalWrong: 0, bestScore: 0, streak: 0, lastDate: '' });
+let dailyConfig = loadData('qmp_daily', { cat: 'random', count: 5, bonus: 50 });
+
+function saveSetting(k, v) {
+  settings[k] = v;
+  saveData('qmp_settings', settings);
+  if (k === 'announcement') renderAnnouncement();
+  if (k === 'ads') renderAds();
+}
+
+// ============================================================
+// DEFAULT QUESTIONS
+// ============================================================
+function getDefaultQuestions() {
+  return [
+    {id:1,cat:'gk',diff:'easy',en:'What is the capital of India?',hi:'भारत की राजधानी क्या है?',opts:['Mumbai','Delhi','Chennai','Kolkata'],optshi:['मुंबई','दिल्ली','चेन्नई','कोलकाता'],ans:1,img:'',explain:'New Delhi is the capital of India.'},
+    {id:2,cat:'gk',diff:'easy',en:'How many continents are there on Earth?',hi:'पृथ्वी पर कितने महाद्वीप हैं?',opts:['5','6','7','8'],optshi:['5','6','7','8'],ans:2,img:'',explain:'There are 7 continents on Earth.'},
+    {id:3,cat:'science',diff:'easy',en:'What is the chemical symbol for water?',hi:'पानी का रासायनिक सूत्र क्या है?',opts:['H2O','CO2','NaCl','O2'],optshi:['H2O','CO2','NaCl','O2'],ans:0,img:'',explain:'Water is H2O - 2 Hydrogen + 1 Oxygen.'},
+    {id:4,cat:'science',diff:'medium',en:'What planet is known as the Red Planet?',hi:'लाल ग्रह किसे कहा जाता है?',opts:['Venus','Jupiter','Mars','Saturn'],optshi:['शुक्र','बृहस्पति','मंगल','शनि'],ans:2,img:'',explain:'Mars has iron oxide giving it a reddish color.'},
+    {id:5,cat:'math',diff:'easy',en:'What is 15 × 8?',hi:'15 × 8 = ?',opts:['100','110','120','130'],optshi:['100','110','120','130'],ans:2,img:'',explain:'15 × 8 = 120'},
+    {id:6,cat:'math',diff:'medium',en:'What is the square root of 144?',hi:'144 का वर्गमूल क्या है?',opts:['10','11','12','13'],optshi:['10','11','12','13'],ans:2,img:'',explain:'√144 = 12 because 12 × 12 = 144.'},
+    {id:7,cat:'english',diff:'easy',en:'Which of these is a noun?',hi:'इनमें से संज्ञा कौन सी है?',opts:['Run','Beautiful','Table','Quickly'],optshi:['दौड़ना','सुंदर','मेज','जल्दी'],ans:2,img:'',explain:'Table is a noun as it names a person, place or thing.'},
+    {id:8,cat:'english',diff:'medium',en:'What is the synonym of "Happy"?',hi:'"खुश" का पर्यायवाची शब्द क्या है?',opts:['Sad','Joyful','Angry','Tired'],optshi:['दुखी','आनंदित','क्रोधित','थका'],ans:1,img:'',explain:'Joyful is a synonym of Happy.'},
+    {id:9,cat:'hindi',diff:'easy',en:'What does "नमस्ते" mean in English?',hi:'"नमस्ते" का अर्थ अंग्रेजी में क्या है?',opts:['Goodbye','Hello','Thanks','Sorry'],optshi:['अलविदा','नमस्कार','धन्यवाद','माफी'],ans:1,img:'',explain:'"नमस्ते" is a Hindi greeting meaning Hello.'},
+    {id:10,cat:'gk',diff:'hard',en:'Which country has the most Olympic gold medals historically?',hi:'ऐतिहासिक रूप से सबसे अधिक ओलंपिक स्वर्ण पदक किस देश के पास हैं?',opts:['China','Russia','Germany','USA'],optshi:['चीन','रूस','जर्मनी','अमेरिका'],ans:3,img:'',explain:'USA has won the most Olympic gold medals in history.'},
+    {id:11,cat:'science',diff:'hard',en:'What is the speed of light in vacuum?',hi:'निर्वात में प्रकाश की गति क्या है?',opts:['299,792 km/s','200,000 km/s','300,000 km/s','150,000 km/s'],optshi:['299,792 km/s','200,000 km/s','300,000 km/s','150,000 km/s'],ans:0,img:'',explain:'Speed of light = 299,792 km/s (approximately 3×10⁸ m/s).'},
+    {id:12,cat:'math',diff:'hard',en:'What is 2³ × 4²?',hi:'2³ × 4² = ?',opts:['64','128','96','32'],optshi:['64','128','96','32'],ans:1,img:'',explain:'2³=8, 4²=16. 8×16=128.'},
+    {id:13,cat:'gk',diff:'medium',en:'Who painted the Mona Lisa?',hi:'मोना लिसा किसने बनाई थी?',opts:['Michelangelo','Raphael','Leonardo da Vinci','Van Gogh'],optshi:['माइकेलेंजेलो','राफेल','लियोनार्दो दा विंची','वैन गॉग'],ans:2,img:'',explain:'The Mona Lisa was painted by Leonardo da Vinci.'},
+    {id:14,cat:'hindi',diff:'medium',en:'What is the plural of "पुस्तक" (Book)?',hi:'"पुस्तक" का बहुवचन क्या है?',opts:['पुस्तकें','पुस्तकों','पुस्तकों को','पुस्तकीय'],optshi:['पुस्तकें','पुस्तकों','पुस्तकों को','पुस्तकीय'],ans:0,img:'',explain:'The plural of पुस्तक (book) is पुस्तकें (books).'},
+    {id:15,cat:'science',diff:'medium',en:'What gas do plants absorb during photosynthesis?',hi:'प्रकाश संश्लेषण के दौरान पौधे कौन सी गैस अवशोषित करते हैं?',opts:['Oxygen','Nitrogen','Carbon Dioxide','Hydrogen'],optshi:['ऑक्सीजन','नाइट्रोजन','कार्बन डाइऑक्साइड','हाइड्रोजन'],ans:2,img:'',explain:'Plants absorb CO2 and release O2 during photosynthesis.'},
+  ];
+}
+
+// ============================================================
+// LANGUAGE / UI TEXT
+// ============================================================
+const T = {
+  en: {
+    heroTitle:'Quiz\nChallenge', heroSub:'Test your knowledge, beat the clock',
+    catTitle:'Categories', quickTitle:'Quick Play',
+    categories:{gk:'General Knowledge',science:'Science',math:'Mathematics',english:'English',hindi:'Hindi'},
+    catIcons:{gk:'🌍',science:'🔬',math:'➕',english:'📖',hindi:'🕉️'},
+    catColors:{gk:'rgba(0,245,255,0.15)',science:'rgba(16,185,129,0.15)',math:'rgba(245,158,11,0.15)',english:'rgba(124,58,237,0.15)',hindi:'rgba(239,68,68,0.15)'},
+    diffTitle:'Select Difficulty', diffSub:'Choose your challenge level',
+    easy:'Easy',medium:'Medium',hard:'Hard',hardcore:'Hardcore',
+    ddEasy:'30s • Basic questions',ddMed:'20s • Moderate',ddHard:'15s • Tough',ddHc:'5s • Expert only 👑',
+    neName:'Your Name',neSub:'Enter your name for the leaderboard',
+    streakLabel:'Day Streak',
+    lbTitle:'Top Players',
+    restart:'Play Again',home:'Home',
+    daily:'Daily Challenge'
+  },
+  hi: {
+    heroTitle:'क्विज़\nचैलेंज', heroSub:'अपना ज्ञान परखें, समय को हराएं',
+    catTitle:'श्रेणियाँ', quickTitle:'त्वरित खेल',
+    categories:{gk:'सामान्य ज्ञान',science:'विज्ञान',math:'गणित',english:'अंग्रेज़ी',hindi:'हिंदी'},
+    catIcons:{gk:'🌍',science:'🔬',math:'➕',english:'📖',hindi:'🕉️'},
+    catColors:{gk:'rgba(0,245,255,0.15)',science:'rgba(16,185,129,0.15)',math:'rgba(245,158,11,0.15)',english:'rgba(124,58,237,0.15)',hindi:'rgba(239,68,68,0.15)'},
+    diffTitle:'कठिनाई चुनें', diffSub:'अपनी चुनौती का स्तर चुनें',
+    easy:'आसान',medium:'मध्यम',hard:'कठिन',hardcore:'हार्डकोर',
+    ddEasy:'30s • बुनियादी प्रश्न',ddMed:'20s • मध्यम',ddHard:'15s • कठिन',ddHc:'5s • विशेषज्ञ 👑',
+    neName:'आपका नाम',neSub:'लीडरबोर्ड के लिए नाम दर्ज करें',
+    streakLabel:'दिन की लकीर',
+    lbTitle:'शीर्ष खिलाड़ी',
+    restart:'फिर खेलें',home:'होम',
+    daily:'दैनिक चुनौती'
+  }
+};
+
+function t(key) { return T[state.lang][key] || T.en[key] || key; }
+
+function toggleLang() {
+  state.lang = state.lang === 'en' ? 'hi' : 'en';
+  document.getElementById('langToggle').textContent = state.lang.toUpperCase();
+  renderHome();
+}
+
+// ============================================================
+// SCREEN NAVIGATION
+// ============================================================
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// ============================================================
+// RENDER HOME
+// ============================================================
+function renderHome() {
+  const l = state.lang;
+  // hero
+  document.getElementById('heroTitle').innerHTML = t('heroTitle').replace('\n','<br>');
+  document.getElementById('heroSub').textContent = t('heroSub');
+  document.getElementById('streakCount').textContent = userStats.streak;
+  document.getElementById('streakLabel').textContent = t('streakLabel');
+  document.getElementById('catTitle').textContent = t('catTitle');
+  document.getElementById('quickTitle').textContent = t('quickTitle');
+  document.getElementById('ql-random').textContent = l==='hi'?'यादृच्छिक':'Random';
+  document.getElementById('ql-lb').textContent = l==='hi'?'स्कोर':'Scores';
+  document.getElementById('ql-ai').textContent = l==='hi'?'AI क्विज़':'AI Quiz';
+  document.getElementById('ql-stats').textContent = l==='hi'?'आँकड़े':'Stats';
+
+  // categories
+  const cats = ['gk','science','math','english','hindi'];
+  const grid = document.getElementById('categoriesGrid');
+  grid.innerHTML = '';
+  cats.forEach(cat => {
+    const count = questions.filter(q=>q.cat===cat).length;
+    const div = document.createElement('div');
+    div.className = 'cat-card';
+    div.style.setProperty('--cat-color', T.en.catColors[cat]);
+    div.innerHTML = `
+      <span class="cat-icon">${t('catIcons')[cat]}</span>
+      <div class="cat-name">${t('categories')[cat]}</div>
+      <div class="cat-count">${count} ${l==='hi'?'प्रश्न':'Questions'}</div>
+    `;
+    div.onclick = () => selectCategory(cat);
+    grid.appendChild(div);
+  });
+
+  // stats bar
+  document.getElementById('statsBar').innerHTML = `
+    <div class="stat-item"><div class="stat-num">${userStats.totalQuizzes}</div><div class="stat-label">${l==='hi'?'क्विज़':'Quizzes'}</div></div>
+    <div class="stat-item"><div class="stat-num">${userStats.bestScore}</div><div class="stat-label">${l==='hi'?'सर्वश्रेष्ठ':'Best'}</div></div>
+    <div class="stat-item"><div class="stat-num">${userStats.totalCorrect}</div><div class="stat-label">${l==='hi'?'सही':'Correct'}</div></div>
+  `;
+
+  renderAnnouncement();
+  renderAds();
+  renderDailyCard();
+  applyTheme();
+}
+
+function renderAnnouncement() {
+  const el = document.getElementById('announcementBanner');
+  if (settings.announcement) {
+    el.style.display = 'flex';
+    el.innerHTML = `<div class="announcement"><span class="ann-icon">📢</span>${settings.announcement}</div>`;
+  } else {
+    el.style.display = 'none';
+  }
+}
+
+function renderAds() {
+  const show = settings.ads && !settings.noads;
+  ['adTop','adBottom','adResult'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (show) {
+      el.style.display = 'block';
+      el.innerHTML = `<!-- Adsterra Ad -->
+<div class="ad-placeholder">📢 Advertisement</div>
+<!-- Paste your Adsterra ad code here -->`;
+    } else {
+      el.style.display = 'none';
+    }
+  });
+}
+
+function renderDailyCard() {
+  const el = document.getElementById('dailyChallengeCard');
+  const today = new Date().toDateString();
+  const done = loadData('qmp_daily_done', '') === today;
+  const l = state.lang;
+  el.innerHTML = `
+    <div class="daily-card" onclick="startDaily()">
+      <div class="daily-header">
+        <div class="daily-flame">🔥</div>
+        <div>
+          <div class="daily-title">${t('daily')}</div>
+          <div class="daily-sub">${done?(l==='hi'?'आज पूरा हो गया!':'Completed today!') : (l==='hi'?'आज का चैलेंज':'Today\'s Challenge')}</div>
+        </div>
+        ${done?'<div style="font-size:24px;margin-left:auto;">✅</div>':''}
+      </div>
+      <div class="daily-meta">
+        <div class="daily-chip">+${dailyConfig.bonus} ${l==='hi'?'बोनस':'Bonus'}</div>
+        <div class="daily-chip">${dailyConfig.count} ${l==='hi'?'प्रश्न':'Qs'}</div>
+      </div>
+    </div>
+  `;
+}
+
+// ============================================================
+// CATEGORY & DIFFICULTY
+// ============================================================
+function selectCategory(cat) {
+  state.currentCategory = cat;
+  state.isDaily = false;
+  ensurePlayerName(() => {
+    document.getElementById('diffCatName').textContent = t('categories')[cat];
+    document.getElementById('diffTitle').textContent = t('diffTitle');
+    document.getElementById('diffSub').textContent = t('diffSub');
+    document.getElementById('dd-easy').textContent = t('ddEasy');
+    document.getElementById('dd-med').textContent = t('ddMed');
+    document.getElementById('dd-hard').textContent = t('ddHard');
+    document.getElementById('dd-hc').textContent = t('ddHc');
+    document.getElementById('hardcoreCard').style.display = (settings.premium || settings.hardcoreTimer) ? 'flex' : 'none';
+    showScreen('diffScreen');
+  });
+}
+
+function startRandom() {
+  const cats = ['gk','science','math','english','hindi'];
+  state.currentCategory = cats[Math.floor(Math.random()*cats.length)];
+  state.isDaily = false;
+  ensurePlayerName(() => selectCategory(state.currentCategory));
+}
+
+function startDaily() {
+  state.currentCategory = dailyConfig.cat === 'random' ? ['gk','science','math','english','hindi'][Math.floor(Math.random()*5)] : dailyConfig.cat;
+  state.isDaily = true;
+  ensurePlayerName(() => startQuiz('medium', parseInt(dailyConfig.count)));
+}
+
+function ensurePlayerName(cb) {
+  if (state.playerName) { cb(); return; }
+  const saved = loadData('qmp_player', '');
+  if (saved) { state.playerName = saved; cb(); return; }
+  state.pendingName = cb;
+  showScreen('nameScreen');
+}
+
+function saveName() {
+  const name = document.getElementById('playerNameInput').value.trim();
+  if (!name) { showToast(state.lang==='hi'?'नाम दर्ज करें!':'Enter your name!','error'); return; }
+  state.playerName = name;
+  saveData('qmp_player', name);
+  if (state.pendingName) { state.pendingName(); state.pendingName = null; }
+}
+
+// ============================================================
+// QUIZ ENGINE
+// ============================================================
+function startQuiz(difficulty, count) {
+  state.currentDifficulty = difficulty;
+  clearInterval(state.timer);
+
+  // get questions
+  let pool = questions.filter(q => q.cat === state.currentCategory || state.currentCategory === 'random');
+  if (difficulty !== 'hardcore') pool = pool.filter(q => q.diff === difficulty || true);
+  pool = shuffle(pool);
+  const limit = count || parseInt(settings.qPerQuiz) || 10;
+  state.questions = pool.slice(0, Math.min(limit, pool.length));
+
+  if (state.questions.length === 0) {
+    showToast(state.lang==='hi'?'इस श्रेणी में प्रश्न नहीं हैं':'No questions in this category','error');
+    return;
+  }
+
+  state.currentQ = 0;
+  state.score = 0;
+  state.correct = 0;
+  state.wrong = 0;
+  state.totalTime = 0;
+
+  showScreen('quizScreen');
+  renderQuestion();
+}
+
+function getTimerSecs(diff) {
+  if (settings.hardcoreTimer) return 5;
+  if (diff === 'easy') return parseInt(settings.timerSecs) || 30;
+  if (diff === 'medium') return 20;
+  if (diff === 'hard') return 15;
+  if (diff === 'hardcore') return 5;
+  return 30;
+}
+
+function renderQuestion() {
+  const q = state.questions[state.currentQ];
+  const total = state.questions.length;
+  const pct = (state.currentQ / total) * 100;
+
+  document.getElementById('qCurrent').textContent = state.currentQ + 1;
+  document.getElementById('qTotal').textContent = total;
+  document.getElementById('liveScore').textContent = state.score;
+  document.getElementById('progressFill').style.width = pct + '%';
+
+  const secs = getTimerSecs(state.currentDifficulty);
+  state.timeLeft = secs;
+  updateTimerDisplay();
+  startTimer();
+
+  const l = state.lang;
+  const qText = (l === 'hi' && q.hi) ? q.hi : q.en;
+  const opts = (l === 'hi' && q.optshi && q.optshi.length) ? q.optshi : q.opts;
+  const letters = ['A','B','C','D'];
+
+  const imgHtml = q.img ? `<img src="${q.img}" class="img-question" onerror="this.style.display='none'">` : '';
+
+  document.getElementById('quizContent').innerHTML = `
+    <div class="question-card">
+      <div class="q-category">${t('categories')[q.cat] || q.cat}</div>
+      ${imgHtml}
+      <div class="q-text">${qText}</div>
+    </div>
+    <div class="options-list" id="optionsList">
+      ${opts.map((opt,i) => `
+        <button class="option-btn" id="opt${i}" onclick="selectAnswer(${i})">
+          <span class="option-letter">${letters[i]}</span>
+          ${opt}
+        </button>
+      `).join('')}
+    </div>
+    <div class="ai-explanation" id="aiExplanation">
+      <div class="ai-label">🤖 AI Explanation</div>
+      <div id="aiText">Loading...</div>
+    </div>
+  `;
+}
+
+function startTimer() {
+  clearInterval(state.timer);
+  const secs = getTimerSecs(state.currentDifficulty);
+  state.timer = setInterval(() => {
+    state.timeLeft--;
+    state.totalTime++;
+    updateTimerDisplay();
+    if (state.timeLeft <= 0) {
+      clearInterval(state.timer);
+      handleTimeout();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const el = document.getElementById('timerDisplay');
+  if (!el) return;
+  el.textContent = state.timeLeft;
+  el.className = 'timer-num';
+  const secs = getTimerSecs(state.currentDifficulty);
+  if (state.timeLeft <= Math.floor(secs * 0.2)) el.classList.add('danger');
+  else if (state.timeLeft <= Math.floor(secs * 0.4)) el.classList.add('warning');
+}
+
+function handleTimeout() {
+  state.wrong++;
+  playSound('wrong');
+  const q = state.questions[state.currentQ];
+  disableOptions();
+  highlightAnswer(q.ans, -1);
+  showAIExplanation(q);
+  setTimeout(nextQuestion, 2000);
+}
+
+function selectAnswer(idx) {
+  clearInterval(state.timer);
+  const q = state.questions[state.currentQ];
+  disableOptions();
+
+  const timeTaken = getTimerSecs(state.currentDifficulty) - state.timeLeft;
+  state.totalTime += timeTaken;
+
+  if (idx === q.ans) {
+    state.correct++;
+    const pts = getDiffPoints();
+    const timeBonus = Math.max(0, Math.floor((state.timeLeft / getTimerSecs(state.currentDifficulty)) * 5));
+    state.score += pts + timeBonus;
+    document.getElementById('liveScore').textContent = state.score;
+    document.getElementById(`opt${idx}`).classList.add('correct');
+    playSound('correct');
+    if (!settings.examMode) showAIExplanation(q);
+    setTimeout(nextQuestion, settings.examMode ? 800 : 2000);
+  } else {
+    state.wrong++;
+    document.getElementById(`opt${idx}`).classList.add('wrong');
+    highlightAnswer(q.ans, idx);
+    playSound('wrong');
+    if (!settings.examMode) showAIExplanation(q);
+    setTimeout(nextQuestion, settings.examMode ? 800 : 2000);
+  }
+}
+
+function getDiffPoints() {
+  const d = state.currentDifficulty;
+  if (d === 'easy') return 10;
+  if (d === 'medium') return 20;
+  if (d === 'hard') return 30;
+  if (d === 'hardcore') return 50;
+  return 10;
+}
+
+function highlightAnswer(correct, wrong) {
+  const el = document.getElementById(`opt${correct}`);
+  if (el) el.classList.add('correct');
+}
+
+function disableOptions() {
+  document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+}
+
+async function showAIExplanation(q) {
+  if (!settings.ai) return;
+  const el = document.getElementById('aiExplanation');
+  const textEl = document.getElementById('aiText');
+  if (!el || !textEl) return;
+
+  // Use stored explanation first
+  if (q.explain) {
+    el.classList.add('visible');
+    textEl.textContent = q.explain;
+    return;
+  }
+
+  el.classList.add('visible');
+  textEl.innerHTML = '<div class="spinner" style="margin:0 auto;"></div>';
+
+  try {
+    const qText = state.lang === 'hi' && q.hi ? q.hi : q.en;
+    const correct = q.opts[q.ans];
+    const prompt = `Explain briefly why "${correct}" is the correct answer to: "${qText}" (2-3 sentences, simple language)`;
+    const key = settings.geminiKey;
+    if (!key || key === 'YOUR_API_KEY_HERE') { textEl.textContent = q.explain || 'Set Gemini API key in admin panel for AI explanations.'; return; }
+
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({contents:[{parts:[{text:prompt}]}]})
+    });
+    const data = await res.json();
+    const txt = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'Could not load explanation.';
+    textEl.textContent = txt;
+  } catch {
+    textEl.textContent = q.explain || 'Could not load AI explanation.';
+  }
+}
+
+function nextQuestion() {
+  state.currentQ++;
+  if (state.currentQ >= state.questions.length) {
+    finishQuiz();
+  } else {
+    renderQuestion();
+  }
+}
+
+// ============================================================
+// RESULTS
+// ============================================================
+function finishQuiz() {
+  clearInterval(state.timer);
+  const total = state.questions.length;
+  const pct = Math.round((state.correct / total) * 100);
+
+  // Daily bonus
+  if (state.isDaily) {
+    const today = new Date().toDateString();
+    if (loadData('qmp_daily_done','') !== today) {
+      state.score += parseInt(dailyConfig.bonus);
+      saveData('qmp_daily_done', today);
+    }
+  }
+
+  // Update streak
+  const today = new Date().toDateString();
+  if (userStats.lastDate !== today) {
+    const yesterday = new Date(); yesterday.setDate(yesterday.getDate()-1);
+    if (userStats.lastDate === yesterday.toDateString()) {
+      userStats.streak++;
+    } else if (userStats.lastDate !== today) {
+      userStats.streak = 1;
+    }
+    userStats.lastDate = today;
+  }
+
+  // Update stats
+  userStats.totalQuizzes++;
+  userStats.totalCorrect += state.correct;
+  userStats.totalWrong += state.wrong;
+  if (state.score > userStats.bestScore) userStats.bestScore = state.score;
+  saveData('qmp_stats', userStats);
+
+  // Leaderboard
+  leaderboard.push({ name: state.playerName, score: state.score, pct, cat: state.currentCategory, date: Date.now() });
+  leaderboard.sort((a,b) => b.score - a.score);
+  if (leaderboard.length > 50) leaderboard = leaderboard.slice(0,50);
+  saveData('qmp_leaderboard', leaderboard);
+
+  showScreen('resultScreen');
+  renderResult(pct, total);
+
+  if (settings.confetti && pct >= 70) launchConfetti();
+  if (pct >= 70) playSound('win');
+}
+
+function renderResult(pct, total) {
+  const l = state.lang;
+  document.getElementById('resultRing').style.setProperty('--pct', pct + '%');
+  document.getElementById('resultPct').textContent = pct + '%';
+  document.getElementById('rs-correct').textContent = state.correct;
+  document.getElementById('rs-wrong').textContent = state.wrong;
+  document.getElementById('rs-score').textContent = state.score;
+  const avgTime = total > 0 ? Math.round(state.totalTime / total) : 0;
+  document.getElementById('rs-time').textContent = avgTime + 's';
+  document.getElementById('rb-restart').textContent = t('restart');
+  document.getElementById('rb-home').textContent = t('home');
+
+  let stars = '⭐', title = l==='hi'?'कोशिश करें!':'Keep Trying!', sub = '';
+  if (pct >= 90) { stars='⭐⭐⭐'; title=l==='hi'?'शानदार!':'Outstanding!'; sub=l==='hi'?'आप एक विशेषज्ञ हैं!':'You are a master!'; }
+  else if (pct >= 70) { stars='⭐⭐⭐'; title=l==='hi'?'बहुत अच्छा!':'Excellent!'; sub=l==='hi'?'शानदार प्रदर्शन!':'Great performance!'; }
+  else if (pct >= 50) { stars='⭐⭐'; title=l==='hi'?'अच्छा!':'Good Job!'; sub=l==='hi'?'और अभ्यास करें':'Practice more'; }
+  else { stars='⭐'; title=l==='hi'?'प्रयास अच्छा था':'Nice Try'; sub=l==='hi'?'हार मत मानो!':'Don\'t give up!'; }
+
+  document.getElementById('resultStars').textContent = stars;
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('resultSub').textContent = sub || `${state.correct}/${total} ${l==='hi'?'सही':'correct'} • ${state.score} ${l==='hi'?'अंक':'pts'}`;
+
+  document.getElementById('pdfExportBtn').style.display = (settings.premium && settings.pdfExport) ? 'flex' : 'none';
+  renderAds();
+}
+
+function restartQuiz() {
+  startQuiz(state.currentDifficulty);
+}
+
+// ============================================================
+// LEADERBOARD
+// ============================================================
+function showLeaderboard() { renderLeaderboard(); showScreen('lbScreen'); }
+function goToLeaderboard() { showLeaderboard(); }
+
+function renderLeaderboard() {
+  document.getElementById('lb-title').textContent = t('lbTitle');
+  const list = document.getElementById('lbList');
+  if (leaderboard.length === 0) {
+    list.innerHTML = `<div class="empty-state"><div class="empty-icon">🏆</div><div class="empty-text">${state.lang==='hi'?'अभी कोई स्कोर नहीं':'No scores yet'}</div></div>`;
+    return;
+  }
+  const medals = ['🥇','🥈','🥉'];
+  const rankClasses = ['gold','silver','bronze'];
+  list.innerHTML = leaderboard.slice(0,20).map((entry,i) => `
+    <div class="lb-item">
+      <div class="lb-rank ${rankClasses[i]||''}">${medals[i]||('#'+(i+1))}</div>
+      <div class="lb-avatar" style="background:${getAvatarColor(entry.name)}">${entry.name.charAt(0).toUpperCase()}</div>
+      <div class="lb-info">
+        <div class="lb-name">${entry.name}</div>
+        <div class="lb-score">${(t('categories')[entry.cat])||entry.cat} • ${entry.pct}%</div>
+      </div>
+      <div class="lb-pts">${entry.score}</div>
+    </div>
+  `).join('');
+}
+
+function getAvatarColor(name) {
+  const colors = ['linear-gradient(135deg,#00f5ff,#0080ff)','linear-gradient(135deg,#7c3aed,#c084fc)','linear-gradient(135deg,#10b981,#34d399)','linear-gradient(135deg,#f59e0b,#fb923c)','linear-gradient(135deg,#ef4444,#f472b6)'];
+  return colors[name.charCodeAt(0) % colors.length];
+}
+
+// ============================================================
+// STATS SCREEN
+// ============================================================
+function showStats() {
+  const l = state.lang;
+  const pct = userStats.totalQuizzes > 0 ? Math.round((userStats.totalCorrect / (userStats.totalCorrect + userStats.totalWrong)) * 100) : 0;
+  document.getElementById('statsContent').innerHTML = `
+    <div style="text-align:center;padding:24px 0 16px;">
+      <div style="font-size:40px;margin-bottom:8px;">📊</div>
+      <div style="font-family:'Orbitron',monospace;font-size:18px;font-weight:700;">${l==='hi'?'मेरे आँकड़े':'My Statistics'}</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
+      <div class="stat-card"><div class="stat-big">${userStats.totalQuizzes}</div><div class="stat-sm">${l==='hi'?'कुल क्विज़':'Total Quizzes'}</div></div>
+      <div class="stat-card"><div class="stat-big">${userStats.bestScore}</div><div class="stat-sm">${l==='hi'?'सर्वश्रेष्ठ स्कोर':'Best Score'}</div></div>
+      <div class="stat-card"><div class="stat-big">${userStats.totalCorrect}</div><div class="stat-sm">${l==='hi'?'कुल सही':'Total Correct'}</div></div>
+      <div class="stat-card"><div class="stat-big">${userStats.streak}🔥</div><div class="stat-sm">${l==='hi'?'लकीर':'Streak'}</div></div>
+      <div class="stat-card" style="grid-column:span 2;"><div class="stat-big">${pct}%</div><div class="stat-sm">${l==='hi'?'सटीकता दर':'Accuracy Rate'}</div></div>
+    </div>
+  `;
+  showScreen('statsScreen');
+}
+
+// ============================================================
+// AI QUIZ GENERATOR
+// ============================================================
+async function startAIQuiz() {
+  if (!settings.aiQuizMaker && !settings.premium) {
+    showToast('AI Quiz Maker requires Premium! Enable in admin panel.','error');
+    return;
+  }
+  const key = settings.geminiKey;
+  if (!key || key === 'YOUR_API_KEY_HERE') {
+    showToast('Set Gemini API key in admin panel','error');
+    return;
+  }
+
+  showToast('🤖 Generating AI quiz...','info');
+
+  try {
+    const prompt = `Generate 5 multiple choice quiz questions on random topics. Return ONLY valid JSON array, no markdown:
+[{"en":"question","opts":["A","B","C","D"],"ans":0,"explain":"reason","cat":"gk","diff":"medium"}]`;
+
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({contents:[{parts:[{text:prompt}]}]})
+    });
+    const data = await res.json();
+    let txt = data?.candidates?.[0]?.content?.parts?.[0]?.text || '[]';
+    txt = txt.replace(/```json|```/g,'').trim();
+    const aiQs = JSON.parse(txt);
+    if (!Array.isArray(aiQs) || aiQs.length === 0) throw new Error('Invalid');
+
+    const formatted = aiQs.map((q,i) => ({
+      id: Date.now()+i, cat: q.cat||'gk', diff: q.diff||'medium',
+      en: q.en||q.question, hi: '', opts: q.opts, optshi: q.opts,
+      ans: q.ans||0, img: '', explain: q.explain||''
+    }));
+
+    state.currentCategory = 'gk';
+    state.currentDifficulty = 'medium';
+    state.questions = formatted;
+    state.currentQ = 0; state.score = 0; state.correct = 0; state.wrong = 0; state.totalTime = 0;
+    state.isDaily = false;
+    ensurePlayerName(() => { showScreen('quizScreen'); renderQuestion(); });
+  } catch(e) {
+    showToast('AI generation failed. Check API key.','error');
+  }
+}
+
+// ============================================================
+// ADMIN PANEL
+// ============================================================
+function openAdminPanel() {
+  document.getElementById('pwModalTitle').textContent = 'Admin Access';
+  document.getElementById('pwModalSub').textContent = 'Enter admin password';
+  document.getElementById('pwInput').value = '';
+  document.getElementById('pwModal').classList.add('active');
+}
+
+function closeModal() { document.getElementById('pwModal').classList.remove('active'); }
+
+function checkPassword() {
+  const pw = document.getElementById('pwInput').value;
+  if (pw === settings.adminPassword) {
+    closeModal();
+    showAdminPanel();
+  } else {
+    showToast('Wrong password!','error');
+  }
+}
+
+document.getElementById('pwInput').addEventListener('keydown', e => { if (e.key==='Enter') checkPassword(); });
+
+function showAdminPanel() {
+  loadAdminSettings();
+  renderQuestionList();
+  renderAdminStats();
+  document.getElementById('adminOverlay').classList.add('active');
+}
+
+function closeAdmin() { document.getElementById('adminOverlay').classList.remove('active'); renderHome(); }
+
+function switchAdminTab(name) {
+  document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+  if (name === 'stats') renderAdminStats();
+}
+
+function loadAdminSettings() {
+  const ids = ['t-sound','t-ads','t-ai','t-confetti','t-premium','t-noads','t-exam','t-hardcore','t-aiqmaker','t-pdf','t-advlb'];
+  const keys = ['sound','ads','ai','confetti','premium','noads','examMode','hardcoreTimer','aiQuizMaker','pdfExport','advLeaderboard'];
+  ids.forEach((id,i) => { const el=document.getElementById(id); if(el) el.checked = !!settings[keys[i]]; });
+  const ts=document.getElementById('timerSetting'); if(ts) ts.value=settings.timerSecs||30;
+  const qp=document.getElementById('qPerQuiz'); if(qp) qp.value=settings.qPerQuiz||10;
+  const gk=document.getElementById('geminiKey'); if(gk) gk.value=settings.geminiKey||'';
+  const an=document.getElementById('announcementText'); if(an) an.value=settings.announcement||'';
+  const dc=document.getElementById('dailyCat'); if(dc) dc.value=dailyConfig.cat||'random';
+  const dcnt=document.getElementById('dailyCount'); if(dcnt) dcnt.value=dailyConfig.count||5;
+  const db=document.getElementById('dailyBonus'); if(db) db.value=dailyConfig.bonus||50;
+}
+
+function addQuestion() {
+  const en=document.getElementById('aq-text').value.trim();
+  const hi=document.getElementById('aq-text-hi').value.trim();
+  const cat=document.getElementById('aq-cat').value;
+  const diff=document.getElementById('aq-diff').value;
+  const a=document.getElementById('aq-a').value.trim();
+  const b=document.getElementById('aq-b').value.trim();
+  const c=document.getElementById('aq-c').value.trim();
+  const d=document.getElementById('aq-d').value.trim();
+  const ans=parseInt(document.getElementById('aq-ans').value);
+  const img=document.getElementById('aq-img').value.trim();
+  const explain=document.getElementById('aq-explain').value.trim();
+
+  if (!en || !a || !b || !c || !d) { showToast('Fill all required fields!','error'); return; }
+
+  const q = { id: Date.now(), cat, diff, en, hi, opts:[a,b,c,d], optshi:[a,b,c,d], ans, img, explain };
+  questions.push(q);
+  saveData('qmp_questions', questions);
+  renderQuestionList();
+  showToast('Question added!','success');
+  ['aq-text','aq-text-hi','aq-a','aq-b','aq-c','aq-d','aq-img','aq-explain'].forEach(id => document.getElementById(id).value='');
+}
+
+function renderQuestionList() {
+  const list = document.getElementById('questionList');
+  if (!list) return;
+  if (questions.length === 0) { list.innerHTML = '<div class="empty-state"><div class="empty-icon">📝</div><div class="empty-text">No questions yet</div></div>'; return; }
+  list.innerHTML = questions.map((q,i) => `
+    <div class="q-item">
+      <div class="q-item-text">
+        ${q.en}
+        <div class="q-item-meta">
+          <span>${q.cat.toUpperCase()}</span>
+          <span>${q.diff}</span>
+          <span>✓ ${q.opts[q.ans]}</span>
+        </div>
+      </div>
+      <div class="q-item-actions">
+        <div class="q-action-btn del" onclick="deleteQuestion(${i})" title="Delete">🗑️</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function deleteQuestion(i) {
+  if (!confirm('Delete this question?')) return;
+  questions.splice(i, 1);
+  saveData('qmp_questions', questions);
+  renderQuestionList();
+  showToast('Deleted','success');
+}
+
+function exportQuestions() {
+  const blob = new Blob([JSON.stringify(questions, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'quiz_questions.json';
+  a.click();
+}
+
+function importQuestions(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const data = JSON.parse(ev.target.result);
+      if (Array.isArray(data)) {
+        questions = [...questions, ...data];
+        saveData('qmp_questions', questions);
+        renderQuestionList();
+        showToast(`Imported ${data.length} questions!`, 'success');
+      }
+    } catch { showToast('Invalid JSON file','error'); }
+  };
+  reader.readAsText(file);
+}
+
+function resetLeaderboard() {
+  if (!confirm('Reset leaderboard?')) return;
+  leaderboard = [];
+  saveData('qmp_leaderboard', []);
+  showToast('Leaderboard reset','success');
+}
+
+function changeAdminPassword() {
+  const pw = document.getElementById('newAdminPw').value;
+  if (!pw || pw.length < 4) { showToast('Min 4 characters','error'); return; }
+  settings.adminPassword = pw;
+  saveData('qmp_settings', settings);
+  document.getElementById('newAdminPw').value = '';
+  showToast('Password changed!','success');
+}
+
+function renderAdminStats() {
+  const grid = document.getElementById('adminStatsGrid');
+  if (grid) grid.innerHTML = `
+    <div class="stat-card"><div class="stat-big">${questions.length}</div><div class="stat-sm">Questions</div></div>
+    <div class="stat-card"><div class="stat-big">${leaderboard.length}</div><div class="stat-sm">Players</div></div>
+    <div class="stat-card"><div class="stat-big">${userStats.totalQuizzes}</div><div class="stat-sm">Total Quizzes</div></div>
+    <div class="stat-card"><div class="stat-big">${userStats.bestScore}</div><div class="stat-sm">Best Score</div></div>
+  `;
+  const lb = document.getElementById('adminLeaderboard');
+  if (lb) {
+    lb.innerHTML = leaderboard.slice(0,10).map((e,i) => `
+      <div class="lb-item">
+        <div class="lb-rank">#${i+1}</div>
+        <div class="lb-info"><div class="lb-name">${e.name}</div><div class="lb-score">${e.cat} • ${e.pct}%</div></div>
+        <div class="lb-pts">${e.score}</div>
+      </div>
+    `).join('') || '<div class="empty-state"><div class="empty-text">No entries</div></div>';
+  }
+}
+
+function saveDailyConfig() {
+  dailyConfig = {
+    cat: document.getElementById('dailyCat').value,
+    count: parseInt(document.getElementById('dailyCount').value) || 5,
+    bonus: parseInt(document.getElementById('dailyBonus').value) || 50
+  };
+  saveData('qmp_daily', dailyConfig);
+  showToast('Daily config saved!','success');
+}
+
+// ============================================================
+// THEME
+// ============================================================
+function setTheme(cls) {
+  document.body.className = cls;
+  settings.theme = cls;
+  saveData('qmp_settings', settings);
+  showToast('Theme applied!','success');
+}
+
+function applyTheme() {
+  if (settings.theme) document.body.className = settings.theme;
+}
+
+// ============================================================
+// SOUND
+// ============================================================
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let audioCtx;
+
+function initAudio() {
+  if (!audioCtx) { try { audioCtx = new AudioCtx(); } catch {} }
+}
+
+function playSound(type) {
+  if (!settings.sound) return;
+  initAudio();
+  if (!audioCtx) return;
+  try {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    if (type === 'correct') {
+      osc.frequency.setValueAtTime(523, audioCtx.currentTime);
+      osc.frequency.setValueAtTime(659, audioCtx.currentTime + 0.1);
+      osc.frequency.setValueAtTime(784, audioCtx.currentTime + 0.2);
+      gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+      osc.start(); osc.stop(audioCtx.currentTime + 0.4);
+    } else if (type === 'wrong') {
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(200, audioCtx.currentTime);
+      osc.frequency.setValueAtTime(150, audioCtx.currentTime + 0.1);
+      gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+      osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+    } else if (type === 'win') {
+      [523,659,784,1047].forEach((f,i) => {
+        const o=audioCtx.createOscillator(), g=audioCtx.createGain();
+        o.connect(g); g.connect(audioCtx.destination);
+        o.frequency.value = f;
+        g.gain.setValueAtTime(0.2, audioCtx.currentTime+i*0.1);
+        g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime+i*0.1+0.15);
+        o.start(audioCtx.currentTime+i*0.1); o.stop(audioCtx.currentTime+i*0.1+0.15);
+      });
+    }
+  } catch {}
+}
+
+// ============================================================
+// CONFETTI
+// ============================================================
+function launchConfetti() {
+  const canvas = document.getElementById('confettiCanvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const pieces = [];
+  const colors = ['#00f5ff','#7c3aed','#f59e0b','#10b981','#ef4444','#f472b6'];
+  for (let i = 0; i < 150; i++) {
+    pieces.push({
+      x: Math.random() * canvas.width, y: Math.random() * canvas.height - canvas.height,
+      w: Math.random()*10+5, h: Math.random()*6+3,
+      color: colors[Math.floor(Math.random()*colors.length)],
+      vy: Math.random()*4+2, vx: (Math.random()-0.5)*3,
+      rot: Math.random()*360, rotV: (Math.random()-0.5)*10,
+      opacity: 1
+    });
+  }
+  let frame = 0;
+  function draw() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach(p => {
+      p.y += p.vy; p.x += p.vx; p.rot += p.rotV;
+      if (frame > 120) p.opacity -= 0.015;
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, p.opacity);
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI/180);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+    });
+    frame++;
+    if (frame < 200) requestAnimationFrame(draw);
+    else ctx.clearRect(0,0,canvas.width,canvas.height);
+  }
+  draw();
+}
+
+// ============================================================
+// TOAST
+// ============================================================
+function showToast(msg, type='info') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = `toast show ${type}`;
+  clearTimeout(el._timer);
+  el._timer = setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+// ============================================================
+// PDF EXPORT
+// ============================================================
+function exportPDF() {
+  const content = `TOP 10 STUDY CENTRE Pro - Result\n\nPlayer: ${state.playerName}\nCategory: ${state.currentCategory}\nDifficulty: ${state.currentDifficulty}\nScore: ${state.score}\nCorrect: ${state.correct}\nWrong: ${state.wrong}\nDate: ${new Date().toLocaleString()}`;
+  const blob = new Blob([content], {type:'text/plain'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'quiz_result.txt';
+  a.click();
+  showToast('Result exported!','success');
+}
+
+// ============================================================
+// UTILS
+// ============================================================
+function shuffle(arr) { return [...arr].sort(() => Math.random()-0.5); }
+
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  applyTheme();
+  renderHome();
+  renderAds();
+
+  // Long press on logo for admin (hidden trigger)
+  let pressTimer;
+  const logo = document.querySelector('.logo');
+  logo.addEventListener('touchstart', () => { pressTimer = setTimeout(openAdminPanel, 2000); });
+  logo.addEventListener('touchend', () => clearTimeout(pressTimer));
+
+  // Close admin on backdrop click
+  document.getElementById('adminOverlay').addEventListener('click', e => {
+    if (e.target === document.getElementById('adminOverlay')) closeAdmin();
+  });
+  document.getElementById('pwModal').addEventListener('click', e => {
+    if (e.target === document.getElementById('pwModal')) closeModal();
+  });
+});
+</script>
+</body>
+</html>
