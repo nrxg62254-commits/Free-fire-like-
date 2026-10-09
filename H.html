@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Dev Manager</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+body{background:#0a0a0a;color:#ededed;min-height:100vh}
+.topbar{background:#111;border-bottom:1px solid #333;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;flex-wrap:wrap;gap:10px}
+.logo{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:700;color:#fff}
+.logo svg{fill:#fff}
+.badge{background:#0070f3;color:#fff;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700}
+.tabs{display:flex;gap:4px;margin-left:20px;flex-wrap:wrap}
+.tab{padding:8px 16px;background:transparent;border:1px solid #333;border-radius:8px;color:#888;font-size:13px;font-weight:600;cursor:pointer;transition:.2s}
+.tab:hover{color:#fff;border-color:#666}
+.tab.active{background:#0070f3;border-color:#0070f3;color:#fff}
+.top-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.btn{padding:8px 16px;border-radius:8px;border:1px solid #333;background:#1a1a1a;color:#ededed;font-size:13px;font-weight:600;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+.btn:hover{background:#222;border-color:#555}
+.btn-primary{background:#0070f3;border-color:#0070f3;color:#fff}
+.btn-primary:hover{background:#0051cc}
+.btn-success{background:#0070f3;border-color:#0070f3;color:#fff}
+.btn-success:hover{background:#0051cc}
+.btn-danger{background:#e00;border-color:#e00;color:#fff}
+.btn-danger:hover{background:#c00}
+.container{max-width:1200px;margin:0 auto;padding:24px}
+.hero{text-align:center;padding:40px 20px;border-bottom:1px solid #222;margin-bottom:24px}
+.hero h1{font-size:32px;color:#fff;margin-bottom:8px}
+.hero p{color:#888;font-size:14px}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+.stat-card{background:#111;border:1px solid #222;border-radius:12px;padding:20px}
+.stat-card .label{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:8px}
+.stat-card .value{font-size:28px;font-weight:800;color:#fff}
+.stat-card .value.green{color:#0f0}
+.stat-card .value.blue{color:#0070f3}
+.panel{background:#111;border:1px solid #222;border-radius:12px;margin-bottom:20px;overflow:hidden}
+.panel-head{padding:16px 20px;border-bottom:1px solid #222;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.panel-head h2{font-size:16px;color:#fff;font-weight:700;display:flex;align-items:center;gap:8px}
+.panel-body{padding:20px}
+.item-list{display:grid;gap:10px}
+.item{background:#0a0a0a;border:1px solid #222;border-radius:8px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;transition:.2s;flex-wrap:wrap}
+.item:hover{border-color:#555;background:#111}
+.item-info{flex:1;min-width:0}
+.item-info h3{font-size:14px;color:#0070f3;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.item-info p{font-size:12px;color:#888;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.item-info .meta{font-size:11px;color:#666;margin-top:4px;display:flex;gap:14px;flex-wrap:wrap}
+.item-actions{display:flex;gap:6px;flex-wrap:wrap}
+.item-actions button,.item-actions a{padding:6px 10px;font-size:11px}
+.file-list{display:grid;gap:6px}
+.file-item{background:#0a0a0a;border:1px solid #222;border-radius:6px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;transition:.2s;flex-wrap:wrap}
+.file-item:hover{border-color:#555;background:#111}
+.file-item .name{font-size:13px;color:#ededed;display:flex;align-items:center;gap:8px;flex:1;min-width:0}
+.file-item .name span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.file-item .size{font-size:11px;color:#666}
+.file-item .actions{display:flex;gap:6px}
+.file-item .actions button{padding:4px 8px;font-size:10px}
+.icon{font-size:16px;flex-shrink:0}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
+.modal.show{display:flex}
+.modal-box{background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:600px;max-height:90vh;overflow-y:auto}
+.modal-head{padding:16px 20px;border-bottom:1px solid #222;display:flex;align-items:center;justify-content:space-between}
+.modal-head h3{font-size:16px;color:#fff}
+.modal-close{background:none;border:0;color:#888;font-size:22px;cursor:pointer;padding:0;width:30px;height:30px;border-radius:6px}
+.modal-close:hover{background:#222;color:#fff}
+.modal-body{padding:20px}
+.modal-foot{padding:16px 20px;border-top:1px solid #222;display:flex;justify-content:flex-end;gap:10px}
+.input{width:100%;padding:10px 14px;background:#0a0a0a;border:1px solid #333;border-radius:6px;color:#ededed;font-size:14px;outline:none;font-family:inherit;margin-bottom:12px}
+.input:focus{border-color:#0070f3;box-shadow:0 0 0 3px rgba(0,112,243,.15)}
+textarea.input{min-height:200px;resize:vertical;font-family:'SF Mono',Monaco,monospace;font-size:12px;line-height:1.5}
+label{display:block;font-size:12px;color:#888;margin-bottom:6px;font-weight:600}
+.checkbox-row{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.checkbox-row input{width:auto;margin:0}
+.toast{position:fixed;bottom:24px;right:24px;background:#111;border:1px solid #333;border-radius:10px;padding:14px 18px;color:#ededed;font-size:13px;z-index:10000;box-shadow:0 8px 30px rgba(0,0,0,.5);transform:translateY(100px);opacity:0;transition:.3s;max-width:340px}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{border-color:#0f0}
+.toast.error{border-color:#e00}
+.toast.info{border-color:#0070f3}
+.loading{text-align:center;padding:40px;color:#888}
+.spinner{display:inline-block;width:24px;height:24px;border:3px solid #333;border-top-color:#0070f3;border-radius:50%;animation:spin 1s linear infinite;margin-bottom:10px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.empty{text-align:center;padding:40px 20px;color:#666}
+.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-box{background:#111;border:1px solid #333;border-radius:16px;padding:40px 32px;width:100%;max-width:440px;text-align:center}
+.login-box h2{color:#fff;font-size:20px;margin-bottom:6px}
+.login-box p{color:#888;font-size:13px;margin-bottom:20px}
+.login-box input{text-align:center;font-family:monospace;font-size:13px;letter-spacing:1px}
+.footer{text-align:center;padding:40px 20px;color:#666;font-size:12px;border-top:1px solid #222;margin-top:40px}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:13px;color:#888;margin-bottom:16px;flex-wrap:wrap}
+.breadcrumb a{color:#0070f3;cursor:pointer;text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
+@media(max-width:600px){.hero h1{font-size:22px}.item{flex-direction:column;align-items:flex-start}.item-actions{width:100%}.item-actions button,.item-actions a{flex:1;justify-content:center}.container{padding:16px}.panel-body{padding:14px}.file-item .actions button{font-size:11px;padding:5px 9px}}
+</style>
+</head>
+<body>
+
+<div id="loginScreen" class="login-screen">
+<div class="login-box">
+<div style="display:flex;align-items:center;justify-content:center;gap:10px;font-size:22px;font-weight:800;color:#fff;margin-bottom:16px">
+<svg width="32" height="32" viewBox="0 0 24 24" fill="#fff"><path d="M12 0L24 24H0L12 0Z"/></svg>
+<span>Dev Manager</span>
+</div>
+<h2>Connect Accounts</h2>
+<p>Enter your tokens</p>
+<label style="text-align:left">GitHub Token (ghp_...)</label>
+<input type="password" id="ghToken" class="input" placeholder="ghp_xxxxxxxxxxxx">
+<label style="text-align:left">Vercel Token (vcp_...)</label>
+<input type="password" id="vcToken" class="input" placeholder="vcp_xxxxxxxxxxxx">
+<button class="btn btn-primary" style="width:100%" onclick="login()">Connect</button>
+<p style="margin-top:16px;font-size:11px;color:#666">GitHub required · Vercel optional</p>
+</div>
+</div>
+
+<div id="app" style="display:none">
+<div class="topbar">
+<div class="logo">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M12 0L24 24H0L12 0Z"/></svg>
+<span>Dev Manager</span>
+<span class="badge">PRO</span>
+</div>
+<div class="tabs">
+<button class="tab active" id="tabBtnGithub" onclick="switchTab('github')">GitHub</button>
+<button class="tab" id="tabBtnVercel" onclick="switchTab('vercel')">Vercel</button>
+</div>
+<div class="top-actions">
+<span id="userTag" style="font-size:13px;color:#888"></span>
+<button class="btn" onclick="logout()">Logout</button>
+</div>
+</div>
+<div class="container" id="container"></div>
+<div class="footer">Dev Manager · GitHub + Vercel</div>
+</div>
+
+<div class="modal" id="modal">
+<div class="modal-box">
+<div class="modal-head">
+<h3 id="modalTitle">Edit</h3>
+<button class="modal-close" onclick="closeModal()">&times;</button>
+</div>
+<div class="modal-body" id="modalBody"></div>
+<div class="modal-foot">
+<button class="btn" onclick="closeModal()">Cancel</button>
+<button class="btn btn-primary" id="modalSave">Save</button>
+</div>
+</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const GH_API = "https://api.github.com";
+const VC_API = "https://api.vercel.com";
+
+let GH_TOKEN = "";
+let VC_TOKEN = "";
+let GH_USER = "";
+let VC_USER = null;
+let currentRepo = "";
+let currentPath = "";
+
+function toast(msg, type) {
+  type = type || "info";
+  var t = document.getElementById("toast");
+  t.textContent = msg;
+  t.className = "toast show " + type;
+  clearTimeout(t._timer);
+  t._timer = setTimeout(function(){ t.className = "toast " + type; }, 3500);
+}
+
+function ghHeaders() {
+  return {
+    "Authorization": "Bearer " + GH_TOKEN,
+    "Accept": "application/vnd.github+json",
+    "X-GitHub-Api-Version": "2022-11-28"
+  };
+}
+
+function vcHeaders() {
+  return { "Authorization": "Bearer " + VC_TOKEN };
+}
+
+async function ghGet(url, params) {
+  try {
+    var u = new URL(url);
+    if (params) Object.entries(params).forEach(function(p){ u.searchParams.set(p[0], p[1]); });
+    return await fetch(u.toString(), { headers: ghHeaders() });
+  } catch (e) { toast("Network error", "error"); return null; }
+}
+
+async function ghPost(url, data) {
+  try {
+    return await fetch(url, {
+      method: "POST",
+      headers: Object.assign({}, ghHeaders(), { "Content-Type": "application/json" }),
+      body: JSON.stringify(data)
+    });
+  } catch (e) { toast("Network error", "error"); return null; }
+}
+
+async function ghPut(url, data) {
+  try {
+    return await fetch(url, {
+      method: "PUT",
+      headers: Object.assign({}, ghHeaders(), { "Content-Type": "application/json" }),
+      body: JSON.stringify(data)
+    });
+  } catch (e) { toast("Network error", "error"); return null; }
+}
+
+async function ghDelete(url, data) {
+  try {
+    return await fetch(url, {
+      method: "DELETE",
+      headers: Object.assign({}, ghHeaders(), { "Content-Type": "application/json" }),
+      body: data ? JSON.stringify(data) : undefined
+    });
+  } catch (e) { toast("Network error", "error"); return null; }
+}
+
+async function vcGet(url, params) {
+  try {
+    var u = new URL(url);
+    if (params) Object.entries(params).forEach(function(p){ u.searchParams.set(p[0], p[1]); });
+    return await fetch(u.toString(), { headers: vcHeaders() });
+  } catch (e) { toast("Network error", "error"); return null; }
+}
+
+async function vcPost(url, data) {
+  try {
+    return await fetch(url, {
+      method: "POST",
+      headers: Object.assign({}, vcHeaders(), { "Content-Type": "application/json" }),
+      body: JSON.stringify(data)
+    });
+  } catch (e) { toast("Network error", "error"); return null; }
+}
+
+async function login() {
+  var ght = document.getElementById("ghToken").value.trim();
+  var vct = document.getElementById("vcToken").value.trim();
+
+  if (!ght) { toast("Enter GitHub token", "error"); return; }
+
+  GH_TOKEN = ght;
+  var r = await ghGet(GH_API + "/user");
+  if (!r) return;
+  if (!r.ok) {
+    var err = await r.json().catch(function(){ return {}; });
+    toast("GitHub token invalid: " + (err.message || r.status), "error");
+    GH_TOKEN = "";
+    return;
+  }
+  var ghData = await r.json();
+  GH_USER = ghData.login;
+
+  if (vct) {
+    VC_TOKEN = vct;
+    var vr = await vcGet(VC_API + "/v2/user");
+    if (vr && vr.ok) {
+      VC_USER = await vr.json();
+      toast("Vercel connected", "success");
+    } else {
+      toast("Vercel token invalid (optional)", "error");
+      VC_TOKEN = "";
+    }
+  }
+
+  document.getElementById("userTag").textContent = "@" + GH_USER;
+  document.getElementById("loginScreen").style.display = "none";
+  document.getElementById("app").style.display = "block";
+
+  if (!VC_TOKEN) {
+    document.getElementById("tabBtnVercel").style.opacity = "0.4";
+  }
+
+  toast("Connected as " + GH_USER, "success");
+  switchTab("github");
+}
+
+function logout() {
+  GH_TOKEN = ""; VC_TOKEN = ""; GH_USER = ""; VC_USER = null;
+  document.getElementById("app").style.display = "none";
+  document.getElementById("loginScreen").style.display = "flex";
+  document.getElementById("ghToken").value = "";
+  document.getElementById("vcToken").value = "";
+}
+
+function switchTab(tab) {
+  document.getElementById("tabBtnGithub").classList.toggle("active", tab === "github");
+  document.getElementById("tabBtnVercel").classList.toggle("active", tab === "vercel");
+  if (tab === "github") loadRepos();
+  else if (tab === "vercel") loadVercel();
+}
+
+async function loadRepos() {
+  var container = document.getElementById("container");
+  container.innerHTML = '<div class="loading"><div class="spinner"></div><div>Loading repositories...</div></div>';
+
+  var r = await ghGet(GH_API + "/user/repos", { per_page: 100, sort: "updated" });
+  if (!r || !r.ok) { container.innerHTML = '<div class="empty">Failed to load repos</div>'; return; }
+  var repos = await r.json();
+
+  var totalStars = repos.reduce(function(s, x){ return s + x.stargazers_count; }, 0);
+  var totalForks = repos.reduce(function(s, x){ return s + x.forks_count; }, 0);
+
+  container.innerHTML =
+    '<div class="hero">' +
+      '<h1>GitHub Repositories</h1>' +
+      '<p>Manage, edit, deploy — all in one place</p>' +
+    '</div>' +
+    '<div class="stats-grid">' +
+      '<div class="stat-card"><div class="label">Repositories</div><div class="value">' + repos.length + '</div></div>' +
+      '<div class="stat-card"><div class="label">Total Stars</div><div class="value green">' + totalStars + '</div></div>' +
+      '<div class="stat-card"><div class="label">Total Forks</div><div class="value">' + totalForks + '</div></div>' +
+      '<div class="stat-card"><div class="label">Vercel</div><div class="value blue">' + (VC_TOKEN ? "Connected" : "—") + '</div></div>' +
+    '</div>' +
+    '<div style="margin-bottom:16px"><button class="btn btn-primary" onclick="openCreateRepo()">➕ New Repository</button></div>' +
+    '<div class="panel">' +
+      '<div class="panel-head">' +
+        '<h2>📂 All Repositories</h2>' +
+        '<span style="font-size:12px;color:#888">' + repos.length + ' total</span>' +
+      '</div>' +
+      '<div class="panel-body">' +
+        '<div class="item-list">' + (repos.length ? repos.map(repoCard).join("") : '<div class="empty">No repositories yet</div>') + '</div>' +
+      '</div>' +
+    '</div>';
+}
+
+function repoCard(repo) {
+  var lock = repo.private ? "🔒" : "🌍";
+  var lang = repo.language || "—";
+  var deployBtn = VC_TOKEN ? '<button class="btn btn-success" onclick="deployToVercel(\'' + escapeAttr(repo.name) + '\')">🚀 Deploy</button>' : '';
+  return '<div class="item">' +
+    '<div class="item-info">' +
+      '<h3>' + lock + ' ' + escapeHtml(repo.name) + '</h3>' +
+      '<p>' + escapeHtml(repo.description || "No description") + '</p>' +
+      '<div class="meta">' +
+        '<span>💻 ' + escapeHtml(lang) + '</span>' +
+        '<span>⭐ ' + repo.stargazers_count + '</span>' +
+        '<span>🍴 ' + repo.forks_count + '</span>' +
+        '<span>🕐 ' + new Date(repo.updated_at).toLocaleDateString() + '</span>' +
+      '</div>' +
+    '</div>' +
+    '<div class="item-actions">' +
+      deployBtn +
+      '<button class="btn" onclick="openRepo(\'' + escapeAttr(repo.name) + '\')">Open</button>' +
+      '<button class="btn btn-danger" onclick="deleteRepo(\'' + escapeAttr(repo.name) + '\')">Delete</button>' +
+    '</div>' +
+  '</div>';
+}
+
+async function openRepo(name) {
+  currentRepo = name;
+  currentPath = "";
+  var container = document.getElementById("container");
+  container.innerHTML = '<div class="loading"><div class="spinner"></div><div>Loading files...</div></div>';
+
+  var r = await ghGet(GH_API + "/repos/" + GH_USER + "/" + name + "/contents/");
+  if (!r || !r.ok) { container.innerHTML = '<div class="empty">Failed to load files</div>'; return; }
+  var files = await r.json();
+
+  container.innerHTML =
+    '<div class="breadcrumb">' +
+      '<a onclick="switchTab(\'github\')">Repositories</a>' +
+      '<span>›</span>' +
+      '<span style="color:#fff">' + escapeHtml(name) + '</span>' +
+    '</div>' +
+    '<div class="panel">' +
+      '<div class="panel-head">' +
+        '<h2>📂 ' + escapeHtml(name) + '</h2>' +
+        '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
+          (VC_TOKEN ? '<button class="btn btn-success" onclick="deployToVercel(\'' + escapeAttr(name) + '\')">🚀 Deploy</button>' : '') +
+          '<button class="btn btn-primary" onclick="openAddFile(\'' + escapeAttr(name) + '\', \'\')">+ Add File</button>' +
+          '<button class="btn" onclick="openUploadFile(\'' + escapeAttr(name) + '\', \'\')">📤 Upload</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="panel-body">' +
+        '<div class="file-list">' + (files.length === 0 ? '<div class="empty">Empty repository</div>' : files.map(function(f){ return fileItem(f, name); }).join("")) + '</div>' +
+      '</div>' +
+    '</div>';
+}
+
+function fileItem(f, repo) {
+  var size = f.size || 0;
+  var sizeStr = size >= 1024 ? (size/1024).toFixed(1) + " KB" : size + " B";
+  if (f.type === "dir") {
+    return '<div class="file-item">' +
+      '<div class="name"><span class="icon">📁</span><span>' + escapeHtml(f.name) + '/</span></div>' +
+      '<div class="actions">' +
+        '<button class="btn" onclick="openFolder(\'' + escapeAttr(repo) + '\', \'' + escapeAttr(f.path) + '\')">Open</button>' +
+      '</div>' +
+    '</div>';
+  }
+  return '<div class="file-item">' +
+    '<div class="name"><span class="icon">📄</span><span>' + escapeHtml(f.name) + '</span></div>' +
+    '<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">' +
+      '<span class="size">' + sizeStr + '</span>' +
+      '<div class="actions">' +
+        '<button class="btn" onclick="viewFile(\'' + escapeAttr(repo) + '\', \'' + escapeAttr(f.path) + '\')">View</button>' +
+        '<button class="btn" onclick="editFile(\'' + escapeAttr(repo) + '\', \'' + escapeAttr(f.path) + '\')">Edit</button>' +
+        '<button class="btn btn-danger" onclick="deleteFile(\'' + escapeAttr(repo) + '\', \'' + escapeAttr(f.path) + '\')">Delete</button>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+}
+
+async function openFolder(repo, path) {
+  currentRepo = repo;
+  currentPath = path;
+  var container = document.getElementById("container");
+  container.innerHTML = '<div class="loading"><div class="spinner"></div><div>Loading...</div></div>';
+
+  var r = await ghGet(GH_API + "/repos/" + GH_USER + "/" + repo + "/contents/" + path);
+  if (!r || !r.ok) { container.innerHTML = '<div class="empty">Failed to load</div>'; return; }
+  var files = await r.json();
+
+  var parts = path.split("/");
+  var breadcrumbs = parts.map(function(p, i){
+    var partial = parts.slice(0, i+1).join("/");
+    return '<a onclick="openFolder(\'' + escapeAttr(repo) + '\', \'' + escapeAttr(partial) + '\')">' + escapeHtml(p) + '</a>';
+  }).join('<span>›</span>');
+
+  container.innerHTML =
+    '<div class="breadcrumb">' +
+      '<a onclick="switchTab(\'github\')">Repositories</a>' +
+      '<span>›</span>' +
+      '<a onclick="openRepo(\'' + escapeAttr(repo) + '\')">' + escapeHtml(repo) + '</a>' +
+      '<span>›</span>' +
+      breadcrumbs +
+    '</div>' +
+    '<div class="panel">' +
+      '<div class="panel-head">' +
+        '<h2>📁 ' + escapeHtml(path) + '</h2>' +
+        '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
+          '<button class="btn btn-primary" onclick="openAddFile(\'' + escapeAttr(repo) + '\', \'' + escapeAttr(path) + '\')">+ Add File</button>' +
+          '<button class="btn" onclick="openUploadFile(\'' + escapeAttr(repo) + '\', \'' + escapeAttr(path) + '\')">📤 Upload</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="panel-body">' +
+        '<div class="file-list">' + files.map(function(f){ return fileItem(f, repo); }).join("") + '</div>' +
+      '</div>' +
+    '</div>';
+}
+
+async function viewFile(repo, path) {
+  var r = await ghGet(GH_API + "/repos/" + GH_USER + "/" + repo + "/contents/" + path);
+  if (!r || !r.ok) { toast("Failed to load file", "error"); return; }
+  var data = await r.json();
+  var content = "";
+  try {
+    content = atob(data.content.replace(/\n/g, ""));
+    content = decodeURIComponent(escape(content));
+  } catch (e) { content = "[binary file]"; }
+  document.getElementById("modalTitle").textContent = "📄 " + path;
+  document.getElementById("modalBody").innerHTML =
+    '<textarea class="input" readonly style="min-height:400px">' + escapeHtml(content) + '</textarea>';
+  document.getElementById("modalSave").style.display = "none";
+  document.getElementById("modal").classList.add("show");
+}
+
+async function editFile(repo, path) {
+  var r = await ghGet(GH_API + "/repos/" + GH_USER + "/" + repo + "/contents/" + path);
+  if (!r || !r.ok) { toast("Failed to load file", "error"); return; }
+  var data = await r.json();
+  var content = "";
+  try {
+    content = atob(data.content.replace(/\n/g, ""));
+    content = decodeURIComponent(escape(content));
+  } catch (e) { content = ""; }
+  document.getElementById("modalTitle").textContent = "✏️ Edit: " + path;
+  document.getElementById("modalBody").innerHTML =
+    '<label>Content</label>' +
+    '<textarea class="input" id="editContent" style="min-height:400px">' + escapeHtml(content) + '</textarea>';
+  document.getElementById("modalSave").style.display = "inline-flex";
+  document.getElementById("modalSave").onclick = function(){ saveEdit(repo, path, data.sha); };
+  document.getElementById("modal").classList.add("show");
+}
+
+async function saveEdit(repo, path, sha) {
+  var content = document.getElementById("editContent").value;
+  var encoded = btoa(unescape(encodeURIComponent(content)));
+  var r = await ghPut(GH_API + "/repos/" + GH_USER + "/" + repo + "/contents/" + path, {
+    message: "Update " + path + " via web",
+    content: encoded,
+    sha: sha
+  });
+  if (r && (r.status === 200 || r.status === 201)) {
+    toast("File updated!", "success");
+    closeModal();
+    if (currentPath) openFolder(repo, currentPath);
+    else openRepo(repo);
+  } else {
+    var err = await r.json().catch(function(){ return {}; });
+    toast("Update failed: " + (err.message || r.status), "error");
+  }
+}
+
+async function deleteFile(repo, path) {
+  if (!confirm("Delete " + path + "?")) return;
+  var r = await ghGet(GH_API + "/repos/" + GH_USER + "/" + repo + "/contents/" + path);
+  if (!r || !r.ok) { toast("File not found", "error"); return; }
+  var data = await r.json();
+  var d = await ghDelete(GH_API + "/repos/" + GH_USER + "/" + repo + "/contents/" + path, {
+    message: "Delete " + path + " via web",
+    sha: data.sha
+  });
+  if (d && d.status === 200) {
+    toast("Deleted", "success");
+    if (currentPath) openFolder(repo, currentPath);
+    else openRepo(repo);
+  } else {
+    toast("Delete failed", "error");
+  }
+}
+
+async function deleteRepo(name) {
+  if (!confirm("Delete repository " + name + "? This cannot be undone!")) return;
+  var r = await ghDelete(GH_API + "/repos/" + GH_USER + "/" + name);
+  if (r && r.status === 204) {
+    toast("Repository deleted", "success");
+    loadRepos();
+  } else {
+    toast("Delete failed — token needs delete_repo scope", "error");
+  }
+}
+
+function openCreateRepo() {
+  document.getElementById("modalTitle").textContent = "➕ Create Repository";
+  document.getElementById("modalBody").innerHTML =
+    '<label>Repository name</label>' +
+    '<input type="text" class="input" id="newRepoName" placeholder="my-awesome-repo">' +
+    '<label>Description (optional)</label>' +
+    '<input type="text" class="input" id="newRepoDesc" placeholder="A short description">' +
+    '<div class="checkbox-row">' +
+      '<input type="checkbox" id="newRepoPrivate">' +
+      '<label for="newRepoPrivate" style="margin:0;cursor:pointer">Private repository</label>' +
+    '</div>' +
+    '<div class="checkbox-row">' +
+      '<input type="checkbox" id="newRepoAutoInit" checked>' +
+      '<label for="newRepoAutoInit" style="margin:0;cursor:pointer">Initialize with README</label>' +
+    '</div>';
+  document.getElementById("modalSave").style.display = "inline-flex";
+  document.getElementById("modalSave").onclick = createRepo;
+  document.getElementById("modal").classList.add("show");
+  setTimeout(function(){ document.getElementById("newRepoName").focus(); }, 100);
+}
+
+async function createRepo() {
+  var name = document.getElementById("newRepoName").value.trim();
+  var desc = document.getElementById("newRepoDesc").value.trim();
+  var isPrivate = document.getElementById("newRepoPrivate").checked;
+  var autoInit = document.getElementById("newRepoAutoInit").checked;
+
+  if (!name) { toast("Enter repo name", "error"); return; }
+  if (!/^[a-zA-Z0-9._-]+$/.test(name)) {
+    toast("Invalid name!", "error");
+    return;
+  }
+
+  var body = { name: name, private: isPrivate, auto_init: autoInit };
+  if (desc) body.description = desc;
+
+  var r = await ghPost(GH_API + "/user/repos", body);
+  if (!r) return;
+
+  if (r.status === 201) {
+    var data = await r.json();
+    toast("Repository created: " + data.name, "success");
+    closeModal();
+    loadRepos();
+  } else if (r.status === 422) {
+    toast("Repo name already exists", "error");
+  } else {
+    var err = await r.json().catch(function(){ return {}; });
+    toast("Failed: " + (err.message || r.status), "error");
+  }
+}
+
+function openAddFile(repo, path) {
+  document.getElementById("modalTitle").textContent = "➕ Add File";
+  document.getElementById("modalBody").innerHTML =
+    '<label>File path (relative to ' + escapeHtml(path || "/") + ')</label>' +
+    '<input type="text" class="input" id="newFileName" placeholder="folder/file.txt">' +
+    '<label>Content</label>' +
+    '<textarea class="input" id="newFileContent" placeholder="File content..." style="min-height:300px"></textarea>';
+  document.getElementById("modalSave").style.display = "inline-flex";
+  document.getElementById("modalSave").onclick = function(){ saveNewFile(repo, path); };
+  document.getElementById("modal").classList.add("show");
+}
+
+async function saveNewFile(repo, basePath) {
+  var name = document.getElementById("newFileName").value.trim();
+  var content = document.getElementById("newFileContent").value;
+  if (!name) { toast("Enter filename", "error"); return; }
+  var fullPath = basePath ? basePath + "/" + name : name;
+  var encoded = btoa(unescape(encodeURIComponent(content)));
+
+  var sha = null;
+  try {
+    var checkResp = await ghGet(GH_API + "/repos/" + GH_USER + "/" + repo + "/contents/" + fullPath);
+    if (checkResp && checkResp.ok) {
+      var checkData = await checkResp.json();
+      sha = checkData.sha;
+    }
+  } catch (e) {}
+
+  var body = { message: "Add " + fullPath + " via web", content: encoded };
+  if (sha) body.sha = sha;
+
+  var r = await ghPut(GH_API + "/repos/" + GH_USER + "/" + repo + "/contents/" + fullPath, body);
+  if (r && (r.status === 200 || r.status === 201)) {
+    toast("File created!", "success");
+    closeModal();
+    if (currentPath) openFolder(repo, currentPath);
+    else openRepo(repo);
+  } else {
+    var err = await r.json().catch(function(){ return {}; });
+    toast("Create failed: " + (err.message || r.status), "error");
+  }
+}
+
+function openUploadFile(repo, path) {
+  document.getElementById("modalTitle").textContent = "📤 Upload File";
+  document.getElementById("modalBody").innerHTML =
+    '<label>Select file (max 5 MB)</label>' +
+    '<input type="file" id="uploadInput" class="input">' +
+    '<p style="font-size:12px;color:#888;margin-top:8px">Uploading to: ' + escapeHtml(path || "/") + '</p>';
+  document.getElementById("modalSave").style.display = "inline-flex";
+  document.getElementById("modalSave").onclick = function(){ uploadFile(repo, path); };
+  document.getElementById("modal").classList.add("show");
+}
+
+async function uploadFile(repo, basePath) {
+  var input = document.getElementById("uploadInput");
+  if (!input.files || input.files.length === 0) { toast("Select a file", "error"); return; }
+  var file = input.files[0];
+  if (file.size > 5 * 1024 * 1024) { toast("File too big (max 5 MB)", "error"); return; }
+
+  var reader = new FileReader();
+  reader.onload = async function() {
+    var base64 = reader.result.split(",")[1];
+    var fullPath = basePath ? basePath + "/" + file.name : file.name;
+
+    var sha = null;
+    try {
+      var checkResp = await ghGet(GH_API + "/repos/" + GH_USER + "/" + repo + "/contents/" + fullPath);
+      if (checkResp && checkResp.ok) {
+        var checkData = await checkResp.json();
+        sha = checkData.sha;
+      }
+    } catch (e) {}
+
+    var body = { message: "Upload " + fullPath + " via web", content: base64 };
+    if (sha) body.sha = sha;
+
+    var r = await ghPut(GH_API + "/repos/" + GH_USER + "/" + repo + "/contents/" + fullPath, body);
+
+    if (r && (r.status === 200 || r.status === 201)) {
+      toast("Uploaded successfully!", "success");
+      closeModal();
+      if (currentPath) openFolder(repo, currentPath);
+      else openRepo(repo);
+    } else {
+      var err = await r.json().catch(function(){ return {}; });
+      toast("Upload failed: " + (err.message || r.status), "error");
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+async function loadVercel() {
+  if (!VC_TOKEN) {
+    document.getElementById("container").innerHTML = '<div class="empty">Vercel token not connected</div>';
+    return;
+  }
+  var container = document.getElementById("container");
+  container.innerHTML = '<div class="loading"><div class="spinner"></div><div>Loading Vercel projects...</div></div>';
+
+  var r = await vcGet(VC_API + "/v9/projects", { limit: 100 });
+  if (!r || !r.ok) { container.innerHTML = '<div class="empty">Failed to load Vercel projects</div>'; return; }
+  var data = await r.json();
+  var projects = data.projects || [];
+
+  container.innerHTML =
+    '<div class="hero">' +
+      '<h1>Vercel Projects</h1>' +
+      '<p>Your deployed projects</p>' +
+    '</div>' +
+    '<div class="stats-grid">' +
+      '<div class="stat-card"><div class="label">Projects</div><div class="value blue">' + projects.length + '</div></div>' +
+    '</div>' +
+    '<div class="panel">' +
+      '<div class="panel-head">' +
+        '<h2>▲ All Projects</h2>' +
+        '<span style="font-size:12px;color:#888">' + projects.length + ' total</span>' +
+      '</div>' +
+      '<div class="panel-body">' +
+        '<div class="item-list">' + (projects.length ? projects.map(projectCard).join("") : '<div class="empty">No projects on Vercel</div>') + '</div>' +
+      '</div>' +
+    '</div>';
+}
+
+function projectCard(p) {
+  return '<div class="item">' +
+    '<div class="item-info">' +
+      '<h3>▲ ' + escapeHtml(p.name) + '</h3>' +
+      '<p>' + escapeHtml(p.framework || "Static") + '</p>' +
+      '<div class="meta">' +
+        '<span>🕐 Updated: ' + new Date(p.updatedAt).toLocaleDateString() + '</span>' +
+      '</div>' +
+    '</div>' +
+    '<div class="item-actions">' +
+      '<a class="btn" href="https://' + escapeAttr(p.name) + '.vercel.app" target="_blank">🌐 Visit</a>' +
+    '</div>' +
+  '</div>';
+}
+
+async function deployToVercel(repoName) {
+  if (!VC_TOKEN) { toast("Vercel not connected", "error"); return; }
+  if (!confirm("Deploy " + repoName + " to Vercel?")) return;
+
+  toast("Getting repo info...", "info");
+
+  var repoResp = await ghGet(GH_API + "/repos/" + GH_USER + "/" + repoName);
+  if (!repoResp || !repoResp.ok) { toast("Failed to get repo info", "error"); return; }
+  var repoData = await repoResp.json();
+  var repoId = repoData.id;
+
+  if (!repoId) { toast("Repo ID not found", "error"); return; }
+
+  toast("Deploying " + repoName + "...", "info");
+
+  var body = {
+    name: repoName.toLowerCase().replace(/[^a-z0-9-]/g, "-").slice(0, 50),
+    gitSource: {
+      type: "github",
+      repoId: repoId,
+      ref: repoData.default_branch || "main"
+    }
+  };
+
+  var r = await vcPost(VC_API + "/v13/deployments?skipAutoDetectionConfirmation=1&forceNew=1", body);
+  if (!r) return;
+
+  if (r.status === 200 || r.status === 201) {
+    var data = await r.json();
+    toast("Deploy started! Check Vercel tab", "success");
+    setTimeout(function(){ switchTab("vercel"); }, 2000);
+  } else {
+    var err = await r.json().catch(function(){ return {}; });
+    if (err.error && err.error.message) {
+      var msg = err.error.message;
+      if (msg.indexOf("GitHub repository") > -1) {
+        toast("Pehle Vercel pe GitHub connect karo: vercel.com/account/login-connections", "error");
+      } else {
+        toast("Deploy failed: " + msg, "error");
+      }
+    } else {
+      toast("Deploy failed", "error");
+    }
+  }
+}
+
+function closeModal() {
+  document.getElementById("modal").classList.remove("show");
+}
+
+function escapeHtml(s) {
+  if (!s) return "";
+  return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+}
+
+function escapeAttr(s) { return escapeHtml(s); }
+
+document.addEventListener("keydown", function(e){ if (e.key === "Escape") closeModal(); });
+document.getElementById("ghToken").addEventListener("keydown", function(e){ if (e.key === "Enter") login(); });
+document.getElementById("vcToken").addEventListener("keydown", function(e){ if (e.key === "Enter") login(); });
+</script>
+</body>
+</html>
